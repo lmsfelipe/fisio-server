@@ -1,16 +1,22 @@
 import { patientController } from "../../controllers/patientController";
+import { professionalController } from "../../controllers/professionalController";
 import sequelize from "../db/sequelize/index.js";
 
 const fastify = require("fastify")({
   logger: true,
 });
 
+// Patient
 fastify.post("/create-patient", patientController.createPatient);
 fastify.get("/find-patient/:id", patientController.findPatient);
 fastify.get(
   "/find-patient-address/:id",
   patientController.findPatientWithAddress
 );
+
+// Professional
+fastify.post("/create-professional", professionalController.createProfessional);
+fastify.get("/find-professional/:id", professionalController.findProfessional);
 
 // Sync database
 sequelize

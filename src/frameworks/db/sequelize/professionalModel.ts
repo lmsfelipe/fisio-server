@@ -2,8 +2,8 @@ import { DataTypes } from "sequelize";
 import sequelize from "./index";
 import Address from "./addressModel";
 
-const Patient = sequelize.define(
-  "patient",
+const Professional = sequelize.define(
+  "professional",
   {
     id: {
       type: DataTypes.UUID,
@@ -45,25 +45,16 @@ const Patient = sequelize.define(
     },
     userType: {
       type: DataTypes.ENUM("patient", "professional"),
-      defaultValue: "patient",
+      defaultValue: "professional",
     },
-    motherName: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    fatherName: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    diagnosis: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    specialization: {
+      type: DataTypes.ENUM("phisio", "speech"),
     },
   },
   {}
 );
 
-Patient.hasOne(Address);
-Address.belongsTo(Patient);
+Professional.hasOne(Address);
+Address.belongsTo(Professional);
 
-export default Patient;
+export default Professional;

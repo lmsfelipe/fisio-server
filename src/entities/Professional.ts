@@ -1,14 +1,14 @@
 import { User, IUser } from "./User";
 
 export interface IProfessional extends IUser {
-  registerNumber: number;
+  specialization: "phisio" | "speech";
 }
 
 export class Professional extends User {
-  props: IProfessional;
+  data: IProfessional;
 
-  constructor(props: IProfessional) {
-    super(props);
-    this.props = props;
+  constructor(data: IProfessional) {
+    super(data);
+    this.data = data;
   }
 }
