@@ -24,7 +24,7 @@ const Professional = sequelize.define(
       allowNull: false,
     },
     birthday: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     cpf: {
@@ -36,7 +36,7 @@ const Professional = sequelize.define(
       allowNull: false,
     },
     phone: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     photo: {
@@ -44,8 +44,12 @@ const Professional = sequelize.define(
       allowNull: true,
     },
     userType: {
-      type: DataTypes.ENUM("patient", "professional"),
+      type: DataTypes.ENUM("patient", "professional", "secretary", "admin"),
       defaultValue: "professional",
+    },
+    permission: {
+      type: DataTypes.ENUM("view", "edit", "admin"),
+      defaultValue: "view",
     },
     specialization: {
       type: DataTypes.ENUM("phisio", "speech"),

@@ -1,3 +1,4 @@
+import { appointmentController } from "../../controllers/appointmentController";
 import { patientController } from "../../controllers/patientController";
 import { professionalController } from "../../controllers/professionalController";
 import sequelize from "../db/sequelize/index.js";
@@ -17,6 +18,9 @@ fastify.get(
 // Professional
 fastify.post("/create-professional", professionalController.createProfessional);
 fastify.get("/find-professional/:id", professionalController.findProfessional);
+
+// Appointment
+fastify.post("/create-appointment", appointmentController.createAppointment);
 
 // Sync database
 sequelize

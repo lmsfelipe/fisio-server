@@ -24,11 +24,11 @@ const Patient = sequelize.define(
       allowNull: false,
     },
     birthday: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     cpf: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     gender: {
@@ -36,7 +36,7 @@ const Patient = sequelize.define(
       allowNull: false,
     },
     phone: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     photo: {
@@ -44,8 +44,12 @@ const Patient = sequelize.define(
       allowNull: true,
     },
     userType: {
-      type: DataTypes.ENUM("patient", "professional"),
+      type: DataTypes.ENUM("patient", "professional", "secretary", "admin"),
       defaultValue: "patient",
+    },
+    permission: {
+      type: DataTypes.ENUM("view", "edit", "admin"),
+      defaultValue: "view",
     },
     motherName: {
       type: DataTypes.STRING(100),

@@ -1,17 +1,16 @@
 export interface IAppointment {
-  patientID: number;
-  professtionalID: number;
-  date: Date;
-  startHour: Date;
+  dateTime: Date;
   duration: number;
-  repeat: boolean;
+  location: "clinic" | "home";
+  patientID: number;
+  professionalID: number;
   observation: string;
 }
 
 export class Appointment {
-  props: IAppointment;
+  data: IAppointment;
 
-  constructor(props: IAppointment) {
-    this.props = props;
+  constructor(data: IAppointment) {
+    this.data = data;
   }
 }
