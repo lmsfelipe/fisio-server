@@ -1,9 +1,11 @@
+import Fastify from "fastify";
+
 import { appointmentController } from "../../controllers/appointmentController";
 import { patientController } from "../../controllers/patientController";
 import { professionalController } from "../../controllers/professionalController";
-import sequelize from "../db/sequelize/index.js";
+import sequelize from "../db/sequelize";
 
-const fastify = require("fastify")({
+const fastify = Fastify({
   logger: true,
 });
 
