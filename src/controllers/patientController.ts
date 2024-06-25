@@ -1,7 +1,7 @@
 import { PatientRepository } from "../repositories/patientRepository";
 import { CreatePatient } from "../use-cases/patient/createPatient";
 import { FindPatient } from "../use-cases/patient/findPatient";
-import { FindPatientWithAddress } from "../use-cases/patient/findPatientWithAddress";
+import { FindCompletePatient } from "../use-cases/patient/findCompletePatient";
 
 const patientRepository = new PatientRepository();
 
@@ -37,13 +37,11 @@ export const patientController = {
     }
   },
 
-  async findPatientWithAddress(req: any, res: any) {
-    const findPatientWithAddress = new FindPatientWithAddress(
-      patientRepository
-    );
+  async findCompletePatient(req: any, res: any) {
+    const findCompletePatient = new FindCompletePatient(patientRepository);
 
     try {
-      const response = await findPatientWithAddress.execute(req.params.id);
+      const response = await findCompletePatient.execute(req.params.id);
       res.type("application/json").code(200);
 
       return response;

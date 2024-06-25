@@ -1,16 +1,13 @@
-import { User, IUser } from "./User";
-
-export interface IPatient extends IUser {
+export interface IPatient {
   fatherName: string;
   motherName: string;
   diagnosis: string;
 }
 
-export class Patient extends User {
+export class Patient {
   data: IPatient;
 
   constructor(data: IPatient) {
-    super(data);
     this.data = data;
   }
 }

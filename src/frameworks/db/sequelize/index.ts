@@ -1,14 +1,17 @@
-import { Sequelize } from "sequelize";
-const env = process.env;
+const Sequelize = require("sequelize");
+const env = process.env.NODE_ENV || "development";
+const config = require(process.cwd() + "/config/config.json")[env];
 
-const database = env.PG_DATABASE || "mydatabase";
-const username = env.PG_USERNAME || "myuser";
-const password = env.PG_PASSWORD || "mypassword";
-const host = env.PG_HOST || "host.docker.internal";
-
-const sequelize = new Sequelize(database, username, password, {
-  host: host,
-  dialect: "postgres",
-});
+let sequelize: typeof Sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
+}
 
 export default sequelize;

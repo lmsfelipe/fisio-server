@@ -1,9 +1,9 @@
 import Fastify from "fastify";
 
+import sequelize from "../db/sequelize";
 import { appointmentController } from "../../controllers/appointmentController";
 import { patientController } from "../../controllers/patientController";
 import { professionalController } from "../../controllers/professionalController";
-import sequelize from "../db/sequelize";
 
 const fastify = Fastify({
   logger: true,
@@ -12,10 +12,7 @@ const fastify = Fastify({
 // Patient
 fastify.post("/create-patient", patientController.createPatient);
 fastify.get("/find-patient/:id", patientController.findPatient);
-fastify.get(
-  "/find-patient-address/:id",
-  patientController.findPatientWithAddress
-);
+fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
 
 // Professional
 fastify.post("/create-professional", professionalController.createProfessional);

@@ -4,6 +4,11 @@ import sequelize from "./index";
 const Appointment = sequelize.define(
   "appointment",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     dateTime: {
       type: DataTypes.DATE,
       allowNull: false,

@@ -3,7 +3,7 @@ import {
   IPatientWithAddress,
 } from "../../repositories/patientRepository";
 
-export class FindPatientWithAddress {
+export class FindCompletePatient {
   patientRepository: IPatientRepository;
 
   constructor(patientRepository: IPatientRepository) {
@@ -11,6 +11,6 @@ export class FindPatientWithAddress {
   }
 
   async execute(id: number): Promise<IPatientWithAddress | null> {
-    return await this.patientRepository.findOneWithAddress(id);
+    return await this.patientRepository.findCompletePatient(id);
   }
 }

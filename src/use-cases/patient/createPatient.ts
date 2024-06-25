@@ -1,5 +1,9 @@
-import { IPatient, Patient } from "../../entities/Patient";
-import { IPatientRepository } from "../../repositories/patientRepository";
+import { Patient } from "../../entities/Patient";
+import { User } from "../../entities/User";
+import {
+  IPatientRepository,
+  IPatientPayload,
+} from "../../repositories/patientRepository";
 
 export class CreatePatient {
   patientRepository: IPatientRepository;
@@ -8,7 +12,9 @@ export class CreatePatient {
     this.patientRepository = patientRepository;
   }
 
-  async execute(data: IPatient): Promise<{ success: boolean; name: string }> {
+  async execute(
+    data: IPatientPayload
+  ): Promise<{ success: boolean; name: string }> {
     const {
       name,
       email,
@@ -18,13 +24,11 @@ export class CreatePatient {
       gender,
       phone,
       photo,
-      fatherName,
-      motherName,
-      diagnosis,
+      patient,
       address,
     } = data;
 
-    const patient = new Patient({
+    const user = new User({
       name,
       email,
       password,
@@ -33,12 +37,18 @@ export class CreatePatient {
       gender,
       phone,
       photo,
-      fatherName,
-      motherName,
-      diagnosis,
       address,
+      userType: "patient",
     });
 
-    return await this.patientRepository.create(patient.data);
+    const patientEntity = new Patient({
+      fatherName: patient.fatherName,
+      motherName: patient.motherName,
+      diagnosis: patient.diagnosis,
+    });
+
+    const payload = { ...user.data, patient: patientEntity.data };
+
+    return await this.patientRepository.create(payload);
   }
 }
