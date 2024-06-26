@@ -47,8 +47,9 @@ export class CreatePatient {
       diagnosis: patient.diagnosis,
     });
 
-    const payload = { ...user.data, patient: patientEntity.data };
-
-    return await this.patientRepository.create(payload);
+    return await this.patientRepository.create({
+      ...user.data,
+      patient: patientEntity.data,
+    });
   }
 }

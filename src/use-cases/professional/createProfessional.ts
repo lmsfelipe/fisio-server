@@ -1,5 +1,9 @@
-import { IProfessional, Professional } from "../../entities/Professional";
-import { IProfessionalRepository } from "../../repositories/professionalRepository";
+import { Professional } from "../../entities/Professional";
+import { User } from "../../entities/User";
+import {
+  IProfessionalPayload,
+  IProfessionalRepository,
+} from "../../repositories/professionalRepository";
 
 export class CreateProfessional {
   professionalRepository: IProfessionalRepository;
@@ -9,7 +13,7 @@ export class CreateProfessional {
   }
 
   async execute(
-    data: IProfessional
+    data: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }> {
     const {
       name,
@@ -21,10 +25,10 @@ export class CreateProfessional {
       phone,
       photo,
       address,
-      specialization,
+      professional,
     } = data;
 
-    const professional = new Professional({
+    const user = new User({
       name,
       email,
       password,
@@ -34,9 +38,16 @@ export class CreateProfessional {
       phone,
       photo,
       address,
-      specialization,
+      userType: "professional",
     });
 
-    return await this.professionalRepository.create(professional.data);
+    const professionalPayload = new Professional({
+      specialization: professional.specialization,
+    });
+
+    return await this.professionalRepository.create({
+      ...user.data,
+      professional: professionalPayload.data,
+    });
   }
 }

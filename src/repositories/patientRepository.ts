@@ -9,14 +9,10 @@ export interface IPatientPayload extends IUser {
   patient: IPatient;
 }
 
-export interface IPatientWithAddress extends IPatient {
-  address: IAddress;
-}
-
 export interface IPatientRepository {
   create(payload: IPatientPayload): Promise<{ success: boolean; name: string }>;
   findOne(patientId: number): Promise<IPatient | null>;
-  findCompletePatient(userId: number): Promise<IPatientWithAddress | null>;
+  findCompletePatient(userId: number): Promise<IPatientPayload | null>;
 }
 
 export class PatientRepository implements IPatientRepository {
@@ -30,7 +26,7 @@ export class PatientRepository implements IPatientRepository {
     return PatientModel.findByPk(id);
   }
 
-  findCompletePatient(userId: number): Promise<IPatientWithAddress | null> {
+  findCompletePatient(userId: number): Promise<IPatientPayload | null> {
     return UserModel.findOne({
       where: { userId },
       include: [
