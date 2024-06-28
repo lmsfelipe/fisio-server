@@ -50,7 +50,7 @@ const User = sequelize.define(
       type: DataTypes.ENUM("patient", "professional", "secretary"),
       allowNull: false,
     },
-    permission: {
+    role: {
       type: DataTypes.ENUM("view", "edit", "admin"),
       defaultValue: "view",
     },

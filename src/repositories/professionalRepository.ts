@@ -12,7 +12,7 @@ export interface IProfessionalRepository {
   create(
     professional: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }>;
-  findOne(id: number): Promise<IProfessionalPayload | null>;
+  findOne(id: number): Promise<IProfessional | null>;
 }
 
 export class ProfessionalRepository implements IProfessionalRepository {
@@ -22,7 +22,7 @@ export class ProfessionalRepository implements IProfessionalRepository {
     return UserModel.create(payload, { include: [Address, ProfessionalModel] });
   }
 
-  findOne(id: number): Promise<IProfessionalPayload> {
+  findOne(id: number): Promise<IProfessional> {
     return ProfessionalModel.findByPk(id);
   }
 }
