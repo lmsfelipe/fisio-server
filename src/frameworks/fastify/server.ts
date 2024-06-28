@@ -5,6 +5,7 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from "fastify-type-provider-zod";
+import { ZodError } from "zod";
 
 import sequelize from "../db/sequelize";
 import { appointmentController } from "../../controllers/appointmentController";
@@ -21,6 +22,20 @@ const fastify = Fastify({
 // Add schema validator and serializer
 fastify.setValidatorCompiler(validatorCompiler);
 fastify.setSerializerCompiler(serializerCompiler);
+
+// Zod error handler
+fastify.setErrorHandler((error, _, reply) => {
+  if (error instanceof ZodError) {
+    reply.status(400).send({
+      statusCode: 400,
+      error: "Bad Request",
+      issues: error.issues,
+    });
+    return;
+  }
+
+  reply.send(error);
+});
 
 // Patient
 fastify.post(
