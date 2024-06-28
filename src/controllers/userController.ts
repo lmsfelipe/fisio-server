@@ -1,5 +1,5 @@
-import type { FastifyReply } from "fastify";
 import jwt from "jsonwebtoken";
+import { FastifyReply } from "fastify";
 
 import { UserRepository } from "../repositories/userRepository";
 import { FindUser } from "../use-cases/user/findUser";

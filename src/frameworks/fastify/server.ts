@@ -12,6 +12,7 @@ import { patientController } from "../../controllers/patientController";
 import { professionalController } from "../../controllers/professionalController";
 import { userController } from "../../controllers/userController";
 import { loginSchema } from "../zod/userSchema";
+import { patientPayloadSchema } from "../zod/patientSchema";
 
 const fastify = Fastify({
   logger: true,
@@ -22,7 +23,11 @@ fastify.setValidatorCompiler(validatorCompiler);
 fastify.setSerializerCompiler(serializerCompiler);
 
 // Patient
-fastify.post("/create-patient", patientController.createPatient);
+fastify.post(
+  "/create-patient",
+  { schema: { body: patientPayloadSchema } },
+  patientController.createPatient
+);
 fastify.get("/find-patient/:id", patientController.findPatient);
 fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
 

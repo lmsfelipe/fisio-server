@@ -1,13 +1,21 @@
-import { PatientRepository } from "../repositories/patientRepository";
+import { FastifyReply } from "fastify";
+
+import {
+  IPatientPayload,
+  PatientRepository,
+} from "../repositories/patientRepository";
 import { CreatePatient } from "../use-cases/patient/createPatient";
 import { FindPatient } from "../use-cases/patient/findPatient";
 import { FindCompletePatient } from "../use-cases/patient/findCompletePatient";
+import {
+  TBodyRequest,
+  TParamsRequest,
+} from "../frameworks/fastify/requestTypes";
 
 const patientRepository = new PatientRepository();
 
 export const patientController = {
-  // TODO: Replace `any` for properly types
-  async createPatient(req: any, res: any) {
+  async createPatient(req: TBodyRequest<IPatientPayload>, res: FastifyReply) {
     const createPatient = new CreatePatient(patientRepository);
 
     try {
@@ -22,7 +30,7 @@ export const patientController = {
     }
   },
 
-  async findPatient(req: any, res: any) {
+  async findPatient(req: TParamsRequest<{ id: number }>, res: FastifyReply) {
     const findPatient = new FindPatient(patientRepository);
 
     try {
@@ -37,7 +45,10 @@ export const patientController = {
     }
   },
 
-  async findCompletePatient(req: any, res: any) {
+  async findCompletePatient(
+    req: TParamsRequest<{ id: number }>,
+    res: FastifyReply
+  ) {
     const findCompletePatient = new FindCompletePatient(patientRepository);
 
     try {
