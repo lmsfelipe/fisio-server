@@ -1,5 +1,5 @@
 import { IUser } from "../entities/User";
-import UserModel from "../frameworks/db/sequelize/userModel";
+import UserModel from "../interfaces/db/sequelize/userModel";
 
 export interface IUserRepository {
   findOne(email: string): Promise<IUser | null>;

@@ -1,5 +1,3 @@
-import { FastifyReply } from "fastify";
-
 import {
   IPatientPayload,
   PatientRepository,
@@ -10,7 +8,8 @@ import { FindCompletePatient } from "../use-cases/patient/findCompletePatient";
 import {
   TBodyRequest,
   TParamsRequest,
-} from "../frameworks/fastify/requestTypes";
+  FastifyReply,
+} from "../interfaces/fastify/requestTypes";
 
 const patientRepository = new PatientRepository();
 

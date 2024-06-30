@@ -1,2 +1,1 @@
-require("dotenv/config");
-require("./frameworks/fastify/server.ts");
+require("./interfaces/fastify/server.ts");

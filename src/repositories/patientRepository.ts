@@ -1,9 +1,9 @@
 import { IAddress } from "../entities/Address";
 import { IPatient } from "../entities/Patient";
 import { IUser } from "../entities/User";
-import Address from "../frameworks/db/sequelize/addressModel";
-import PatientModel from "../frameworks/db/sequelize/patientModel";
-import UserModel from "../frameworks/db/sequelize/userModel";
+import Address from "../interfaces/db/sequelize/addressModel";
+import PatientModel from "../interfaces/db/sequelize/patientModel";
+import UserModel from "../interfaces/db/sequelize/userModel";
 
 export interface IPatientPayload extends IUser {
   patient: IPatient;

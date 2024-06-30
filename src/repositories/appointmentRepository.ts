@@ -1,5 +1,5 @@
 import { IAppointment } from "../entities/Appointment";
-import AppointmentModel from "../frameworks/db/sequelize/appointmentModel";
+import AppointmentModel from "../interfaces/db/sequelize/appointmentModel";
 
 export interface IAppointmentRepository {
   create(

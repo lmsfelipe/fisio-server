@@ -14,6 +14,7 @@ import { professionalController } from "../../controllers/professionalController
 import { userController } from "../../controllers/userController";
 import { loginSchema } from "../zod/userSchema";
 import { patientPayloadSchema } from "../zod/patientSchema";
+import { auth } from "../middlewares/auth";
 
 const fastify = Fastify({
   logger: true,
@@ -40,7 +41,7 @@ fastify.setErrorHandler((error, _, reply) => {
 // Patient
 fastify.post(
   "/create-patient",
-  { schema: { body: patientPayloadSchema } },
+  { schema: { body: patientPayloadSchema }, preHandler: [auth] },
   patientController.createPatient
 );
 fastify.get("/find-patient/:id", patientController.findPatient);

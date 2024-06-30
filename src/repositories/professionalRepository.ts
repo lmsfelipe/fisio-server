@@ -1,8 +1,8 @@
 import { IProfessional } from "../entities/Professional";
 import { IUser } from "../entities/User";
-import Address from "../frameworks/db/sequelize/addressModel";
-import ProfessionalModel from "../frameworks/db/sequelize/professionalModel";
-import UserModel from "../frameworks/db/sequelize/userModel";
+import Address from "../interfaces/db/sequelize/addressModel";
+import ProfessionalModel from "../interfaces/db/sequelize/professionalModel";
+import UserModel from "../interfaces/db/sequelize/userModel";
 
 export interface IProfessionalPayload extends IUser {
   professional: IProfessional;

@@ -1,10 +1,9 @@
 import jwt from "jsonwebtoken";
-import { FastifyReply } from "fastify";
 
 import { UserRepository } from "../repositories/userRepository";
 import { FindUser } from "../use-cases/user/findUser";
-import { TLoginSchema } from "../frameworks/zod/userSchema";
-import { TBodyRequest } from "../frameworks/fastify/requestTypes";
+import { TLoginSchema } from "../interfaces/zod/userSchema";
+import { TBodyRequest, FastifyReply } from "../interfaces/fastify/requestTypes";
 
 const userRepository = new UserRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
