@@ -14,7 +14,9 @@ import { professionalController } from "../../controllers/professionalController
 import { userController } from "../../controllers/userController";
 import { loginSchema } from "../zod/userSchema";
 import { patientPayloadSchema } from "../zod/patientSchema";
-import { auth } from "../middlewares/auth";
+// import { auth } from "../middlewares/auth";
+import { professionalPayloadSchema } from "../zod/professionalSchema";
+import { appointmentSchema } from "../zod/appointmentSchema";
 
 const fastify = Fastify({
   logger: true,
@@ -48,7 +50,11 @@ fastify.get("/find-patient/:id", patientController.findPatient);
 fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
 
 // Professional
-fastify.post("/create-professional", professionalController.createProfessional);
+fastify.post(
+  "/create-professional",
+  { schema: { body: professionalPayloadSchema } },
+  professionalController.createProfessional
+);
 fastify.get("/find-professional/:id", professionalController.findProfessional);
 fastify.get(
   "/find-professional-appointments/:id",
@@ -56,7 +62,11 @@ fastify.get(
 );
 
 // Appointment
-fastify.post("/create-appointment", appointmentController.createAppointment);
+fastify.post(
+  "/create-appointment",
+  { schema: { body: appointmentSchema } },
+  appointmentController.createAppointment
+);
 
 // Login
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
