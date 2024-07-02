@@ -3,6 +3,7 @@ import { userSchema } from "./userSchema";
 import { IPatient } from "../../entities/Patient";
 
 const patientSchema = z.object({
+  name: z.string(),
   fatherName: z.string(),
   motherName: z.string(),
   diagnosis: z.string(),

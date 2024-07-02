@@ -9,6 +9,9 @@ const Professional = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    name: {
+      type: DataTypes.STRING,
+    },
     specialization: {
       type: DataTypes.ENUM("phisio", "speech"),
     },

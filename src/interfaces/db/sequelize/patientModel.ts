@@ -9,6 +9,9 @@ const Patient = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    name: {
+      type: DataTypes.STRING,
+    },
     motherName: {
       type: DataTypes.STRING(100),
       allowNull: false,

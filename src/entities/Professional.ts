@@ -1,6 +1,5 @@
-import { User, IUser } from "./User";
-
 export interface IProfessional {
+  name: string;
   specialization: "phisio" | "speech" | "secretary";
 }
 
