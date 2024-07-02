@@ -1,4 +1,12 @@
-import { ProfessionalRepository } from "../repositories/professionalRepository";
+import {
+  FastifyReply,
+  TBodyRequest,
+  TParamsRequest,
+} from "../interfaces/fastify/requestTypes";
+import {
+  IProfessionalPayload,
+  ProfessionalRepository,
+} from "../repositories/professionalRepository";
 import { CreateProfessional } from "../use-cases/professional/createProfessional";
 import { FindProfessional } from "../use-cases/professional/findProfessional";
 import { FindProfessionalAppointments } from "../use-cases/professional/findProfessionalAppointments";
@@ -6,8 +14,10 @@ import { FindProfessionalAppointments } from "../use-cases/professional/findProf
 const professionalRepository = new ProfessionalRepository();
 
 export const professionalController = {
-  // TODO: Replace `any` for properly types
-  async createProfessional(req: any, res: any) {
+  async createProfessional(
+    req: TBodyRequest<IProfessionalPayload>,
+    res: FastifyReply
+  ) {
     const createProfessional = new CreateProfessional(professionalRepository);
 
     try {
@@ -22,7 +32,10 @@ export const professionalController = {
     }
   },
 
-  async findProfessional(req: any, res: any) {
+  async findProfessional(
+    req: TParamsRequest<{ id: number }>,
+    res: FastifyReply
+  ) {
     const findProfessional = new FindProfessional(professionalRepository);
 
     try {
@@ -37,7 +50,10 @@ export const professionalController = {
     }
   },
 
-  async findProfessionalAppointments(req: any, res: any) {
+  async findProfessionalAppointments(
+    req: TParamsRequest<{ id: number }>,
+    res: FastifyReply
+  ) {
     const findProfessionalWithAppointments = new FindProfessionalAppointments(
       professionalRepository
     );

@@ -1,3 +1,9 @@
+import { IAppointment } from "../entities/Appointment";
+import {
+  FastifyReply,
+  TBodyRequest,
+  TParamsRequest,
+} from "../interfaces/fastify/requestTypes";
 import { AppointmentRepository } from "../repositories/appointmentRepository";
 import { CreateAppointment } from "../use-cases/appointment/createAppointment";
 import { FindAppointment } from "../use-cases/appointment/findAppointment";
@@ -5,8 +11,7 @@ import { FindAppointment } from "../use-cases/appointment/findAppointment";
 const appointmentRepository = new AppointmentRepository();
 
 export const appointmentController = {
-  // TODO: Replace `any` for properly types
-  async createAppointment(req: any, res: any) {
+  async createAppointment(req: TBodyRequest<IAppointment>, res: FastifyReply) {
     const createAppointment = new CreateAppointment(appointmentRepository);
 
     try {
@@ -21,7 +26,10 @@ export const appointmentController = {
     }
   },
 
-  async findAppointment(req: any, res: any) {
+  async findAppointment(
+    req: TParamsRequest<{ id: number }>,
+    res: FastifyReply
+  ) {
     const findAppointment = new FindAppointment(appointmentRepository);
 
     try {

@@ -80,7 +80,7 @@ sequelize
     );
     fastify.listen(
       { port: 3000, host: "0.0.0.0" },
-      (err: any, address: any) => {
+      (err: any, address: string) => {
         if (err) throw err;
         console.log(
           `==========Server is now listening on ${address}==============`
