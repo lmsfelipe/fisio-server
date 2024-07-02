@@ -1,6 +1,6 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 
-export type { FastifyReply };
+export type { FastifyReply, FastifyRequest };
 
 export type TBodyRequest<TBody> = FastifyRequest<{
   Body: TBody;

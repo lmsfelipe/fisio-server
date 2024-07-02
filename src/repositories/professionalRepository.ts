@@ -1,6 +1,7 @@
 import { IProfessional } from "../entities/Professional";
 import { IUser } from "../entities/User";
 import Address from "../interfaces/db/sequelize/addressModel";
+import Appointment from "../interfaces/db/sequelize/appointmentModel";
 import ProfessionalModel from "../interfaces/db/sequelize/professionalModel";
 import UserModel from "../interfaces/db/sequelize/userModel";
 
@@ -13,6 +14,7 @@ export interface IProfessionalRepository {
     professional: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }>;
   findOne(id: number): Promise<IProfessional | null>;
+  findOneWithAppointments(id: number): Promise<IProfessional | null>;
 }
 
 export class ProfessionalRepository implements IProfessionalRepository {
@@ -24,5 +26,12 @@ export class ProfessionalRepository implements IProfessionalRepository {
 
   findOne(id: number): Promise<IProfessional> {
     return ProfessionalModel.findByPk(id);
+  }
+
+  findOneWithAppointments(id: number): Promise<IProfessional> {
+    return ProfessionalModel.findOne({
+      where: { id },
+      include: { model: Appointment },
+    });
   }
 }

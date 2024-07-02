@@ -1,6 +1,7 @@
 import { ProfessionalRepository } from "../repositories/professionalRepository";
 import { CreateProfessional } from "../use-cases/professional/createProfessional";
 import { FindProfessional } from "../use-cases/professional/findProfessional";
+import { FindProfessionalAppointments } from "../use-cases/professional/findProfessionalAppointments";
 
 const professionalRepository = new ProfessionalRepository();
 
@@ -26,6 +27,25 @@ export const professionalController = {
 
     try {
       const response = await findProfessional.execute(req.params.id);
+      res.type("application/json").code(200);
+
+      return response;
+    } catch (error) {
+      res.type("application/json").code(400);
+
+      return { error };
+    }
+  },
+
+  async findProfessionalAppointments(req: any, res: any) {
+    const findProfessionalWithAppointments = new FindProfessionalAppointments(
+      professionalRepository
+    );
+
+    try {
+      const response = await findProfessionalWithAppointments.execute(
+        req.params.id
+      );
       res.type("application/json").code(200);
 
       return response;

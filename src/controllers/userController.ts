@@ -28,7 +28,7 @@ export const userController = {
         throw new Error("Wrong password");
       }
 
-      const token = jwt.sign({ id, userType }, jwtSecret, { expiresIn: "1h" });
+      const token = jwt.sign({ id, userType }, jwtSecret, { expiresIn: "1y" });
 
       res.type("application/json").code(200);
       return { token };

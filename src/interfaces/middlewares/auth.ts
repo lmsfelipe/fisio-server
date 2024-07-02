@@ -1,14 +1,15 @@
 import jwt from "jsonwebtoken";
+import { FastifyReply, FastifyRequest } from "../fastify/requestTypes";
 
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
 function authError() {
-  const error = new Error("Usuário não autenticado.");
+  const error: any = new Error("Usuário não autenticado.");
   error.status = 401;
   throw error;
 }
 
-export function auth(req, reply, done) {
+export function auth(req: any, _: any, done: () => void) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {

@@ -1,5 +1,7 @@
 import { IAppointment } from "../entities/Appointment";
 import AppointmentModel from "../interfaces/db/sequelize/appointmentModel";
+import Patient from "../interfaces/db/sequelize/patientModel";
+import Professional from "../interfaces/db/sequelize/professionalModel";
 
 export interface IAppointmentRepository {
   create(
@@ -10,7 +12,9 @@ export interface IAppointmentRepository {
 
 export class AppointmentRepository implements IAppointmentRepository {
   create(payload: IAppointment): Promise<{ success: boolean; name: string }> {
-    return AppointmentModel.create(payload);
+    return AppointmentModel.create(payload, {
+      include: [Patient, Professional],
+    });
   }
 
   findOne(id: number): Promise<IAppointment> {

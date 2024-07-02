@@ -14,8 +14,8 @@ export class CreateAppointment {
       duration,
       location,
       observation,
-      patientID,
-      professionalID,
+      patientId,
+      professionalId,
     } = data;
 
     const appointment = new Appointment({
@@ -23,8 +23,8 @@ export class CreateAppointment {
       duration,
       location,
       observation,
-      patientID,
-      professionalID,
+      patientId,
+      professionalId,
     });
 
     return await this.appointmentRepository.create(appointment.data);

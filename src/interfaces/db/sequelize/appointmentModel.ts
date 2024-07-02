@@ -1,5 +1,8 @@
 import { DataTypes } from "sequelize";
+
 import sequelize from "./index";
+import Professional from "./professionalModel";
+import Patient from "./patientModel";
 
 const Appointment = sequelize.define(
   "appointment",
@@ -21,19 +24,17 @@ const Appointment = sequelize.define(
       type: DataTypes.ENUM("clinic", "home"),
       allowNull: false,
     },
-    patientID: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
-    professionalID: {
-      type: DataTypes.UUID,
-      allowNull: false,
-    },
     observation: {
       type: DataTypes.STRING,
     },
   },
   {}
 );
+
+Appointment.belongsTo(Professional);
+Appointment.belongsTo(Patient);
+
+Professional.hasMany(Appointment);
+Patient.hasMany(Appointment);
 
 export default Appointment;
