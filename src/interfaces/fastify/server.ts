@@ -40,6 +40,10 @@ fastify.setErrorHandler((error, _, reply) => {
   reply.send(error);
 });
 
+/**
+ * Routes
+ */
+
 // Patient
 fastify.post(
   "/create-patient",
@@ -60,6 +64,10 @@ fastify.get(
   "/find-professional-appointments/:id",
   professionalController.findProfessionalAppointments
 );
+fastify.get(
+  "/find-professionals-appointments",
+  professionalController.findProfessionalsAppointments
+);
 
 // Appointment
 fastify.post(
@@ -71,7 +79,9 @@ fastify.post(
 // Login
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
 
-// Sync database
+/**
+ * Start
+ */
 sequelize
   .sync({ alter: true })
   .then(() => {

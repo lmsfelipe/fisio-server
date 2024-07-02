@@ -2,7 +2,7 @@ import { z } from "zod";
 import { IAppointment } from "../../entities/Appointment";
 
 export const appointmentSchema = z.object({
-  dateTime: z.date(),
+  dateTime: z.coerce.date(),
   duration: z.number(),
   location: z.enum(["clinic", "home"]),
   patientId: z.string(),
