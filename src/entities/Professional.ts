@@ -1,5 +1,6 @@
 export interface IProfessional {
   name: string;
+  ownerId: string;
   specialization: "phisio" | "speech" | "secretary";
 }
 

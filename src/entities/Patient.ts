@@ -1,4 +1,5 @@
 export interface IPatient {
+  ownerId: string;
   name: string;
   fatherName: string;
   motherName: string;

@@ -4,6 +4,7 @@ import sequelize from "./index";
 import Patient from "./patientModel";
 import Professional from "./professionalModel";
 import Address from "./addressModel";
+import Owner from "./ownerModel";
 
 const User = sequelize.define(
   "user",
@@ -47,7 +48,7 @@ const User = sequelize.define(
       allowNull: true,
     },
     userType: {
-      type: DataTypes.ENUM("patient", "professional", "admin"),
+      type: DataTypes.ENUM("patient", "professional", "owner"),
       allowNull: false,
     },
     permission: {
@@ -66,5 +67,8 @@ Professional.belongsTo(User);
 
 User.hasOne(Address);
 Address.belongsTo(User);
+
+User.hasOne(Owner);
+Owner.belongsTo(User);
 
 export default User;

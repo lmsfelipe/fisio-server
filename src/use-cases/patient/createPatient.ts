@@ -43,6 +43,7 @@ export class CreatePatient {
 
     const patientEntity = new Patient({
       name,
+      ownerId: patient.ownerId,
       fatherName: patient.fatherName,
       motherName: patient.motherName,
       diagnosis: patient.diagnosis,

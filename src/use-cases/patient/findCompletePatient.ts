@@ -1,6 +1,6 @@
 import {
+  IPatientPayload,
   IPatientRepository,
-  IPatientWithAddress,
 } from "../../repositories/patientRepository";
 
 export class FindCompletePatient {
@@ -10,7 +10,7 @@ export class FindCompletePatient {
     this.patientRepository = patientRepository;
   }
 
-  async execute(id: number): Promise<IPatientWithAddress | null> {
+  async execute(id: number): Promise<IPatientPayload | null> {
     return await this.patientRepository.findCompletePatient(id);
   }
 }

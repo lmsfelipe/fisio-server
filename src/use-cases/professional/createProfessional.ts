@@ -43,6 +43,7 @@ export class CreateProfessional {
 
     const professionalPayload = new Professional({
       name,
+      ownerId: professional.ownerId,
       specialization: professional.specialization,
     });
 

@@ -11,9 +11,15 @@ const Professional = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    ownerId: {
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     specialization: {
       type: DataTypes.ENUM("phisio", "speech"),
+      allowNull: false,
     },
   },
   {}

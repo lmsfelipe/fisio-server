@@ -1,4 +1,3 @@
-import { IAddress } from "../entities/Address";
 import { IPatient } from "../entities/Patient";
 import { IUser } from "../entities/User";
 import Address from "../interfaces/db/sequelize/addressModel";

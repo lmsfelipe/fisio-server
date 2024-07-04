@@ -13,7 +13,7 @@ export interface IUser {
   phone: string;
   photo?: File;
   address: IAddress;
-  userType?: "patient" | "professional" | "admin";
+  userType?: "patient" | "professional" | "owner";
   permission?: "view" | "edit" | "full";
   patient?: IPatient;
   professional?: IProfessional;

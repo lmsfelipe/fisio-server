@@ -20,7 +20,7 @@ export const userSchema = z.object({
   phone: z.string().length(11),
   photo: z.optional(z.instanceof(File)),
   address: addressSchema,
-  userType: z.optional(z.enum(["patient", "professional", "admin"])),
+  userType: z.optional(z.enum(["patient", "professional", "owner"])),
 }) satisfies z.ZodType<IUser>;
 
 // Login
