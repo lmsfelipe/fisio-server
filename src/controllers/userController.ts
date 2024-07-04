@@ -3,7 +3,12 @@ import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/userRepository";
 import { FindUser } from "../use-cases/user/findUser";
 import { TLoginSchema } from "../interfaces/zod/userSchema";
-import { TBodyRequest, FastifyReply } from "../interfaces/fastify/requestTypes";
+import {
+  TBodyRequest,
+  FastifyReply,
+  TParamsRequest,
+} from "../interfaces/fastify/requestTypes";
+import { FindUserProfessional } from "../use-cases/user/findUserProfessional";
 
 const userRepository = new UserRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
@@ -34,6 +39,23 @@ export const userController = {
       return { token };
     } catch (error) {
       res.type("application/json").code(400);
+
+      return { error };
+    }
+  },
+
+  async findUserProfessional(
+    req: TParamsRequest<{ email: string }>,
+    reply: FastifyReply
+  ) {
+    const findUserProfessional = new FindUserProfessional(userRepository);
+
+    try {
+      const response = await findUserProfessional.execute(req.params.email);
+      reply.type("application/json").code(200);
+      return { data: response };
+    } catch (error) {
+      reply.type("application/json").code(400);
 
       return { error };
     }

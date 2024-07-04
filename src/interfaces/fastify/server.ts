@@ -78,6 +78,10 @@ fastify.post(
 
 // Login
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
+fastify.get(
+  "/find-user-professional/:email",
+  userController.findUserProfessional
+);
 
 /**
  * Start
