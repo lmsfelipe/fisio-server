@@ -1,4 +1,5 @@
 import { IAddress } from "./Address";
+import { IOwner } from "./Owner";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 
@@ -17,6 +18,7 @@ export interface IUser {
   permission?: "view" | "edit" | "full";
   patient?: IPatient;
   professional?: IProfessional;
+  owner?: IOwner;
 }
 
 export class User {

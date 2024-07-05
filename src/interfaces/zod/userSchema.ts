@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { IUser } from "../../entities/User";
 
-const addressSchema = z.object({
+export const addressSchema = z.object({
   street: z.string(),
   number: z.number(),
   neighborhood: z.string(),

@@ -17,6 +17,8 @@ import { patientPayloadSchema } from "../zod/patientSchema";
 // import { auth } from "../middlewares/auth";
 import { professionalPayloadSchema } from "../zod/professionalSchema";
 import { appointmentSchema } from "../zod/appointmentSchema";
+import { ownerPayloadSchema } from "../zod/ownerSchema";
+import { ownerController } from "../../controllers/ownerConroller";
 
 const fastify = Fastify({
   logger: true,
@@ -68,6 +70,15 @@ fastify.get(
   "/find-professionals-appointments",
   professionalController.findProfessionalsAppointments
 );
+
+// Owner
+fastify.post(
+  "/create-owner",
+  { schema: { body: ownerPayloadSchema } },
+  ownerController.createOwner
+);
+
+fastify.get("/find-owner/:id", ownerController.findOneOwner);
 
 // Appointment
 fastify.post(

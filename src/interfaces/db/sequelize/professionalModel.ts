@@ -18,7 +18,7 @@ const Professional = sequelize.define(
       allowNull: false,
     },
     specialization: {
-      type: DataTypes.ENUM("phisio", "speech"),
+      type: DataTypes.ENUM("phisio", "speech", "secretary"),
       allowNull: false,
     },
   },
