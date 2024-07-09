@@ -21,7 +21,7 @@ export const ownerController = {
       const response = await createOwner.execute(req.body);
 
       res.type("application/json").code(200);
-      return { success: true, name: response.name };
+      return { success: true, id: response.id };
     } catch (error) {
       res.type("application/json").code(400);
 

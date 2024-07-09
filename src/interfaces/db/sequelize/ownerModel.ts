@@ -35,7 +35,16 @@ Professional.belongsTo(Owner);
 Owner.hasMany(Patient);
 Patient.belongsTo(Owner);
 
-Owner.hasOne(Address);
-Address.belongsTo(Owner);
+Owner.hasOne(Address, {
+  foreignKey: "addressableId",
+  constraints: false,
+  scope: {
+    addressableType: "company",
+  },
+});
+Address.belongsTo(Owner, {
+  foreignKey: "addressableId",
+  constraints: false,
+});
 
 export default Owner;

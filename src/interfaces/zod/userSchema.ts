@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { IUser } from "../../entities/User";
-
-export const addressSchema = z.object({
-  street: z.string(),
-  number: z.number(),
-  neighborhood: z.string(),
-  city: z.string(),
-  state: z.string(),
-  zipCode: z.string(),
-});
+import { addressSchema } from "./addressSchema";
 
 export const userSchema = z.object({
   name: z.string(),

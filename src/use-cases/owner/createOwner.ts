@@ -14,7 +14,7 @@ export class CreateOwner {
 
   async execute(
     data: IOwnerPayload
-  ): Promise<{ success: boolean; name: string }> {
+  ): Promise<{ success: boolean; id: string }> {
     const {
       name,
       email,

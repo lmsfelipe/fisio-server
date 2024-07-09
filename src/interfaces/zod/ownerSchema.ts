@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { addressSchema, userSchema } from "./userSchema";
+import { userSchema } from "./userSchema";
 import { IOwner } from "../../entities/Owner";
+import { addressSchema } from "./addressSchema";
 
 const ownerSchema = z.object({
   name: z.string(),

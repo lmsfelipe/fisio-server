@@ -65,8 +65,17 @@ Patient.belongsTo(User);
 User.hasOne(Professional);
 Professional.belongsTo(User);
 
-User.hasOne(Address);
-Address.belongsTo(User);
+User.hasOne(Address, {
+  foreignKey: "addressableId",
+  constraints: false,
+  scope: {
+    addressableType: "user",
+  },
+});
+Address.belongsTo(User, {
+  foreignKey: "addressableId",
+  constraints: false,
+});
 
 User.hasOne(Owner);
 Owner.belongsTo(User);

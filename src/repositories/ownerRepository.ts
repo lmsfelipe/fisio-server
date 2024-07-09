@@ -11,12 +11,12 @@ export interface IOwnerPayload extends IUser {
 }
 
 export interface IOwnerRepository {
-  create(payload: IOwnerPayload): Promise<{ success: boolean; name: string }>;
+  create(payload: IOwnerPayload): Promise<{ success: boolean; id: string }>;
   findOne(ownerId: string): Promise<IOwnerPayload | null>;
 }
 
 export class OwnerRepository implements IOwnerRepository {
-  create(payload: IOwnerPayload): Promise<{ success: boolean; name: string }> {
+  create(payload: IOwnerPayload): Promise<{ success: boolean; id: string }> {
     return UserModel.create(payload, {
       include: [{ model: Address }, { model: OwnerModel, include: Address }],
     });
