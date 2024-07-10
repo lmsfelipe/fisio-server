@@ -15,6 +15,7 @@ const Patient = sequelize.define(
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     motherName: {
       type: DataTypes.STRING(100),

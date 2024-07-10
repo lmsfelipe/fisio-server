@@ -10,8 +10,8 @@ export class CreateAppointment {
 
   async execute(data: IAppointment): Promise<{ success: boolean }> {
     const {
-      dateTime,
-      duration,
+      dateStart,
+      dateEnd,
       location,
       observation,
       patientId,
@@ -19,8 +19,8 @@ export class CreateAppointment {
     } = data;
 
     const appointment = new Appointment({
-      dateTime,
-      duration,
+      dateStart,
+      dateEnd,
       location,
       observation,
       patientId,

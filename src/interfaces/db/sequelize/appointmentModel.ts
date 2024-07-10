@@ -12,12 +12,12 @@ const Appointment = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    dateTime: {
+    dateStart: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    duration: {
-      type: DataTypes.INTEGER,
+    dateEnd: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     location: {

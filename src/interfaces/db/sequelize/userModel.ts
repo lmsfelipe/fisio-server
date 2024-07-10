@@ -34,6 +34,7 @@ const User = sequelize.define(
     cpf: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      unique: true,
     },
     gender: {
       type: DataTypes.ENUM("male", "female", "other"),
@@ -45,7 +46,6 @@ const User = sequelize.define(
     },
     photo: {
       type: DataTypes.BLOB,
-      allowNull: true,
     },
     userType: {
       type: DataTypes.ENUM("patient", "professional", "owner"),

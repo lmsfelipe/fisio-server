@@ -11,6 +11,7 @@ const Address = sequelize.define(
     },
     addressableType: {
       type: DataTypes.ENUM("user", "company"),
+      allowNull: false,
     },
     street: {
       type: DataTypes.STRING(100),

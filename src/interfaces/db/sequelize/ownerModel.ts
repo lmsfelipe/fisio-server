@@ -24,6 +24,7 @@ const Owner = sequelize.define(
     cnpj: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
   },
   {}

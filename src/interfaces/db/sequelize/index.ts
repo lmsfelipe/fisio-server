@@ -1,3 +1,5 @@
+// TODO: Refactor to consume env variables
+
 const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require(process.cwd() + "/config/config.json")[env];
