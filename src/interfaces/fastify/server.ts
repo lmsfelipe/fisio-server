@@ -97,6 +97,9 @@ fastify.get(
 /**
  * Start
  */
+const port = process.env.PORT || "8080";
+const host = process.env.HOST || "0.0.0.0";
+
 sequelize
   .sync({ alter: true })
   .then(() => {
@@ -104,7 +107,7 @@ sequelize
       "====================Database synchronized===================="
     );
     fastify.listen(
-      { port: 3000, host: "0.0.0.0" },
+      { port: parseInt(port, 10), host },
       (err: any, address: string) => {
         if (err) throw err;
         console.log(
