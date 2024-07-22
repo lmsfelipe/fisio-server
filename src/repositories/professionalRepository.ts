@@ -45,6 +45,7 @@ export class ProfessionalRepository implements IProfessionalRepository {
 
   findAllWithAppointments(): Promise<IProfessionalWithAppointment[]> {
     return ProfessionalModel.findAll({
+      where: { specialization: "phisio" },
       include: { model: Appointment },
     });
   }

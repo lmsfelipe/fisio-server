@@ -26,7 +26,11 @@ export class OwnerRepository implements IOwnerRepository {
     return OwnerModel.findOne({
       where: { id },
       include: [
-        { model: Professional, as: "professionals" },
+        {
+          model: Professional,
+          as: "professionals",
+          where: { specialization: "phisio" },
+        },
         { model: Patient, as: "patients" },
       ],
     });
