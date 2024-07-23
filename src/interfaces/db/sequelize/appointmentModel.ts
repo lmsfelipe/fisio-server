@@ -20,6 +20,12 @@ const Appointment = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    patientName: {
+      type: DataTypes.STRING,
+    },
+    professionalName: {
+      type: DataTypes.STRING,
+    },
     location: {
       type: DataTypes.ENUM("clinic", "home"),
       allowNull: false,

@@ -22,7 +22,7 @@ export const appointmentController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      return { error: error.message };
     }
   },
 

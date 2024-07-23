@@ -4,6 +4,8 @@ export interface IAppointment {
   location: "clinic" | "home";
   patientId: string;
   professionalId: string;
+  patientName?: string;
+  professionalName?: string;
   observation: string;
 }
 
