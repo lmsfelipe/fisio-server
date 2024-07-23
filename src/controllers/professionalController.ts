@@ -9,7 +9,7 @@ import {
   ProfessionalRepository,
 } from "../repositories/professionalRepository";
 import { CreateProfessional } from "../use-cases/professional/createProfessional";
-import { FindProfessional } from "../use-cases/professional/findProfessional";
+import { FindProfessionals } from "../use-cases/professional/findProfessionals";
 import { FindProfessionalAppointments } from "../use-cases/professional/findProfessionalAppointments";
 import { FindProfessionalsAppointments } from "../use-cases/professional/findProfessionalsAppointments";
 
@@ -34,14 +34,14 @@ export const professionalController = {
     }
   },
 
-  async findProfessional(
-    req: TParamsRequest<{ id: number }>,
+  async findProfessionals(
+    req: TParamsRequest<{ ownerId: number }>,
     res: FastifyReply
   ) {
-    const findProfessional = new FindProfessional(professionalRepository);
+    const findProfessionals = new FindProfessionals(professionalRepository);
 
     try {
-      const response = await findProfessional.execute(req.params.id);
+      const response = await findProfessionals.execute(req.params.ownerId);
       res.type("application/json").code(200);
 
       return response;

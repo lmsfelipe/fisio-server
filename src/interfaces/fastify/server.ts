@@ -61,7 +61,10 @@ fastify.post(
   { schema: { body: professionalPayloadSchema } },
   professionalController.createProfessional
 );
-fastify.get("/find-professional/:id", professionalController.findProfessional);
+fastify.get(
+  "/find-professionals/:ownerId",
+  professionalController.findProfessionals
+);
 fastify.get(
   "/find-professional-appointments/:id",
   professionalController.findProfessionalAppointments

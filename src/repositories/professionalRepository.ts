@@ -18,7 +18,7 @@ export interface IProfessionalRepository {
   create(
     professional: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }>;
-  findOne(id: number): Promise<IProfessional | null>;
+  findAll(ownerId: number): Promise<IProfessional[] | null>;
   findOneWithAppointments(
     id: number
   ): Promise<IProfessionalWithAppointment | null>;
@@ -32,8 +32,10 @@ export class ProfessionalRepository implements IProfessionalRepository {
     return UserModel.create(payload, { include: [Address, ProfessionalModel] });
   }
 
-  findOne(id: number): Promise<IProfessional> {
-    return ProfessionalModel.findByPk(id);
+  findAll(ownerId: number): Promise<IProfessional[]> {
+    return ProfessionalModel.findAll({
+      where: { ownerId, specialization: "phisio" },
+    });
   }
 
   findOneWithAppointments(id: number): Promise<IProfessionalWithAppointment> {
