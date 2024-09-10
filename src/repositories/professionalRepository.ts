@@ -1,3 +1,5 @@
+import { col, fn, Op, Sequelize } from "sequelize";
+
 import { IAppointment } from "../entities/Appointment";
 import { IProfessional } from "../entities/Professional";
 import { IUser } from "../entities/User";
@@ -22,7 +24,9 @@ export interface IProfessionalRepository {
   findOneWithAppointments(
     id: number
   ): Promise<IProfessionalWithAppointment | null>;
-  findAllWithAppointments(): Promise<IProfessionalWithAppointment[] | []>;
+  findAllWithAppointments(
+    date: string
+  ): Promise<IProfessionalWithAppointment[] | []>;
 }
 
 export class ProfessionalRepository implements IProfessionalRepository {
@@ -45,10 +49,23 @@ export class ProfessionalRepository implements IProfessionalRepository {
     });
   }
 
-  findAllWithAppointments(): Promise<IProfessionalWithAppointment[]> {
+  findAllWithAppointments(
+    date: string
+  ): Promise<IProfessionalWithAppointment[]> {
     return ProfessionalModel.findAll({
-      where: { specialization: "phisio" },
-      include: { model: Appointment },
+      where: {
+        specialization: "phisio",
+      },
+      include: {
+        model: Appointment,
+        required: false,
+        where: Sequelize.where(
+          fn("DATE", col("dateStart")), // Extracts the date part of 'createdAt'
+          {
+            [Op.eq]: new Date(date), // Compares it to the specific date
+          }
+        ),
+      },
     });
   }
 }
