@@ -1,4 +1,5 @@
 export interface IAppointment {
+  id?: number;
   dateStart: Date;
   dateEnd: Date;
   location: "clinic" | "home";
@@ -6,7 +7,9 @@ export interface IAppointment {
   professionalId: string;
   patientName?: string;
   professionalName?: string;
-  observation: string;
+  observation?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class Appointment {

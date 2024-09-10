@@ -10,6 +10,7 @@ export interface IAppointmentRepository {
   create(
     appointment: IAppointment
   ): Promise<{ success: boolean; error?: any; name?: string }>;
+  edit(appointment: IAppointment): Promise<{ success: boolean; error?: any }>;
   findOne(id: number): Promise<IAppointment | null>;
 }
 
@@ -39,7 +40,34 @@ export class AppointmentRepository implements IAppointmentRepository {
 
       return result;
     } catch (error) {
-      throw new Error(error);
+      throw new Error("Não foi possível criar o agendamento", { cause: error });
+    }
+  }
+
+  async edit(
+    payload: IAppointment
+  ): Promise<{ success: boolean; error?: any }> {
+    try {
+      await sequelize.transaction(async (transaction: any) => {
+        const patient: IPatient = await Patient.findByPk(payload.patientId, {
+          transaction,
+        });
+
+        const professional: IProfessional = await Professional.findByPk(
+          payload.professionalId,
+          { transaction }
+        );
+
+        payload.patientName = patient.name;
+        payload.professionalName = professional.name;
+        await AppointmentModel.update(payload, { where: { id: payload.id } });
+      });
+
+      return { success: true };
+    } catch (error) {
+      throw new Error("Não foi possível editar o agendamento", {
+        cause: error,
+      });
     }
   }
 
