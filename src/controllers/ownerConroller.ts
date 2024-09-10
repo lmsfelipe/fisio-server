@@ -25,7 +25,7 @@ export const ownerController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
@@ -41,7 +41,7 @@ export const ownerController = {
       res.type("application/json").code(400);
       console.log("owner", error);
 
-      return { error };
+      throw { error };
     }
   },
 };

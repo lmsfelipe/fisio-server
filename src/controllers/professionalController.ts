@@ -3,6 +3,7 @@ import {
   FastifyRequest,
   TBodyRequest,
   TParamsRequest,
+  TQueryRequest,
 } from "../interfaces/fastify/requestTypes";
 import {
   IProfessionalPayload,
@@ -30,7 +31,7 @@ export const professionalController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
@@ -48,7 +49,7 @@ export const professionalController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
@@ -70,24 +71,32 @@ export const professionalController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
-  async findProfessionalsAppointments(_req: FastifyRequest, res: FastifyReply) {
+  async findProfessionalsAppointments(
+    req: TQueryRequest<{ date: string }>,
+    res: FastifyReply
+  ) {
     const findProfessionalsWithAppointments = new FindProfessionalsAppointments(
       professionalRepository
     );
 
+    const { date } = req.query;
+
+    if (!date) throw new Error("Uma data deve ser fornecida");
+
     try {
-      const response = await findProfessionalsWithAppointments.execute();
+      const response = await findProfessionalsWithAppointments.execute(date);
       res.type("application/json").code(200);
 
       return response;
     } catch (error) {
       res.type("application/json").code(400);
+      console.log("error => ", error);
 
-      return { error };
+      throw { error };
     }
   },
 };

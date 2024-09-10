@@ -8,7 +8,7 @@ export class CreateAppointment {
     this.appointmentRepository = appointmentRepository;
   }
 
-  async execute(data: IAppointment): Promise<{ success: boolean }> {
+  execute(data: IAppointment): Promise<{ success: boolean }> {
     const {
       dateStart,
       dateEnd,
@@ -27,6 +27,6 @@ export class CreateAppointment {
       professionalId,
     });
 
-    return await this.appointmentRepository.create(appointment.data);
+    return this.appointmentRepository.create(appointment.data);
   }
 }

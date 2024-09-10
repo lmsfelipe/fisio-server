@@ -3,7 +3,7 @@ import {
   PatientRepository,
 } from "../repositories/patientRepository";
 import { CreatePatient } from "../use-cases/patient/createPatient";
-import { FindPatient } from "../use-cases/patient/findPatient";
+import { FindPatients } from "../use-cases/patient/findPatients";
 import { FindCompletePatient } from "../use-cases/patient/findCompletePatient";
 import {
   TBodyRequest,
@@ -25,22 +25,25 @@ export const patientController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
-  async findPatient(req: TParamsRequest<{ id: number }>, res: FastifyReply) {
-    const findPatient = new FindPatient(patientRepository);
+  async findPatients(
+    req: TParamsRequest<{ ownerId: number }>,
+    res: FastifyReply
+  ) {
+    const findPatients = new FindPatients(patientRepository);
 
     try {
-      const response = await findPatient.execute(req.params.id);
+      const response = await findPatients.execute(req.params.ownerId);
       res.type("application/json").code(200);
 
       return response;
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
@@ -58,7 +61,7 @@ export const patientController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 };

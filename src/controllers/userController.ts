@@ -40,7 +40,7 @@ export const userController = {
     } catch (error) {
       res.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 
@@ -57,7 +57,7 @@ export const userController = {
     } catch (error) {
       reply.type("application/json").code(400);
 
-      return { error };
+      throw { error };
     }
   },
 };
