@@ -6,6 +6,8 @@ import {
   validatorCompiler,
 } from "fastify-type-provider-zod";
 import { ZodError } from "zod";
+import fastifyHelmet from "@fastify/helmet";
+import fastifyCors from "@fastify/cors";
 
 import sequelize from "../db/sequelize";
 import { appointmentController } from "../../controllers/appointmentController";
@@ -23,6 +25,10 @@ import { ownerController } from "../../controllers/ownerConroller";
 const fastify = Fastify({
   logger: true,
 });
+
+// Middlewares
+fastify.register(fastifyHelmet);
+fastify.register(fastifyCors);
 
 // Add schema validator and serializer
 fastify.setValidatorCompiler(validatorCompiler);
@@ -52,7 +58,7 @@ fastify.post(
   { schema: { body: patientPayloadSchema } },
   patientController.createPatient
 );
-fastify.get("/find-patient/:id", patientController.findPatient);
+fastify.get("/find-patients/:ownerId", patientController.findPatients);
 fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
 
 // Professional
@@ -88,6 +94,12 @@ fastify.post(
   "/create-appointment",
   { schema: { body: appointmentSchema } },
   appointmentController.createAppointment
+);
+
+fastify.put(
+  "/edit-appointment",
+  { schema: { body: appointmentSchema } },
+  appointmentController.editAppointment
 );
 
 // Login
