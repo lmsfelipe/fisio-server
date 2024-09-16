@@ -1,6 +1,5 @@
 import {
   FastifyReply,
-  FastifyRequest,
   TBodyRequest,
   TParamsRequest,
   TQueryRequest,

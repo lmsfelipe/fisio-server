@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { FastifyReply, FastifyRequest } from "../fastify/requestTypes";
 
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
