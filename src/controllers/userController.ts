@@ -21,26 +21,34 @@ export const userController = {
 
     try {
       const user = await findOne.execute(email);
+      const errorMessage = "Nenhum usuário foi encontrado";
 
       if (!user) {
-        throw new Error("No user has been found");
+        throw new Error(errorMessage);
       }
 
       const { id, userType } = user;
       const isPasswordEqual = password === user.password;
 
       if (!isPasswordEqual) {
-        throw new Error("Wrong password");
+        throw new Error(errorMessage);
       }
 
-      const token = jwt.sign({ id, userType }, jwtSecret, { expiresIn: "1y" });
+      const token = jwt.sign({ userId: id, userType }, jwtSecret, {
+        expiresIn: "1y",
+      });
 
       res.type("application/json").code(200);
       return { token };
     } catch (error) {
-      res.type("application/json").code(400);
-
-      throw { error };
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        res.type("application/json").code(401);
+        throw { error: error.message };
+      } else {
+        res.type("application/json").code(500);
+        throw { error: "Something went wrong" };
+      }
     }
   },
 

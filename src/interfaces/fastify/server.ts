@@ -102,7 +102,7 @@ fastify.put(
   appointmentController.editAppointment
 );
 
-// Login
+// User
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
 fastify.get(
   "/find-user-professional/:email",
