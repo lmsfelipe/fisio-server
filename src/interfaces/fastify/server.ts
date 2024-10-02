@@ -16,7 +16,7 @@ import { professionalController } from "../../controllers/professionalController
 import { userController } from "../../controllers/userController";
 import { loginSchema } from "../zod/userSchema";
 import { patientPayloadSchema } from "../zod/patientSchema";
-// import { auth } from "../middlewares/auth";
+import { auth } from "../middlewares/auth";
 import { professionalPayloadSchema } from "../zod/professionalSchema";
 import { appointmentSchema } from "../zod/appointmentSchema";
 import { ownerPayloadSchema } from "../zod/ownerSchema";
@@ -64,48 +64,57 @@ fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
 // Professional
 fastify.post(
   "/create-professional",
-  { schema: { body: professionalPayloadSchema } },
+  { schema: { body: professionalPayloadSchema }, preHandler: [auth] },
   professionalController.createProfessional
 );
 fastify.get(
   "/find-professionals/:ownerId",
+  { preHandler: [auth] },
   professionalController.findProfessionals
 );
 fastify.get(
   "/find-professional-appointments/:id",
+  { preHandler: [auth] },
   professionalController.findProfessionalAppointments
 );
 fastify.get(
   "/find-professionals-appointments",
+  { preHandler: [auth] },
   professionalController.findProfessionalsAppointments
 );
 
 // Owner
 fastify.post(
   "/create-owner",
-  { schema: { body: ownerPayloadSchema } },
+  { schema: { body: ownerPayloadSchema }, preHandler: [auth] },
   ownerController.createOwner
 );
 
-fastify.get("/find-owner/:id", ownerController.findOneOwner);
+fastify.get(
+  "/find-owner/:id",
+  { preHandler: [auth] },
+  ownerController.findOneOwner
+);
 
 // Appointment
 fastify.post(
   "/create-appointment",
-  { schema: { body: appointmentSchema } },
+  { schema: { body: appointmentSchema }, preHandler: [auth] },
   appointmentController.createAppointment
 );
 
 fastify.put(
   "/edit-appointment",
-  { schema: { body: appointmentSchema } },
+  { schema: { body: appointmentSchema }, preHandler: [auth] },
   appointmentController.editAppointment
 );
 
 // User
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
+fastify.get("/find-user", { preHandler: [auth] }, userController.findUser);
 fastify.get(
   "/find-user-professional/:email",
+  { preHandler: [auth] },
   userController.findUserProfessional
 );
 

@@ -49,6 +49,7 @@ export class AppointmentRepository implements IAppointmentRepository {
   ): Promise<{ success: boolean; error?: any }> {
     try {
       await sequelize.transaction(async (transaction: any) => {
+        // TODO: Reuse this
         const patient: IPatient = await Patient.findByPk(payload.patientId, {
           transaction,
         });

@@ -8,6 +8,12 @@ function authError() {
   throw error;
 }
 
+export function decodeToken<TToken>(BeaderToken: string): TToken {
+  const token = BeaderToken.split(" ")[1];
+
+  return jwt.decode(token) as TToken;
+}
+
 export function auth(req: any, _: any, done: () => void) {
   const authHeader = req.headers.authorization;
 
@@ -15,11 +21,10 @@ export function auth(req: any, _: any, done: () => void) {
     return authError();
   }
 
-  const token = authHeader.split(" ")[1];
   let decodedToken;
 
   try {
-    decodedToken = jwt.verify(token, jwtSecret);
+    decodedToken = decodeToken(authHeader);
   } catch (err) {
     return authError();
   }
