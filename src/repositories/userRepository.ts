@@ -8,13 +8,13 @@ export interface IUserProfessional extends IUser {
 }
 
 export interface IUserRepository {
-  findOne(email: string): Promise<IUser | null>;
-  findOneProfessional(email: string): Promise<IUserProfessional | null>;
+  findOne(id: string): Promise<IUser | null>;
+  findOneProfessional(id: string): Promise<IUserProfessional | null>;
 }
 
 export class UserRepository implements IUserRepository {
-  findOne(email: string): Promise<IUser | null> {
-    return UserModel.findOne({ where: { email } });
+  findOne(id: string): Promise<IUser | null> {
+    return UserModel.findOne({ where: { id } });
   }
 
   findOneProfessional(email: string): Promise<IUserProfessional | null> {

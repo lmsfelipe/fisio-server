@@ -7,8 +7,10 @@ import {
   TBodyRequest,
   FastifyReply,
   TParamsRequest,
+  FastifyRequest,
 } from "../interfaces/fastify/requestTypes";
 import { FindUserProfessional } from "../use-cases/user/findUserProfessional";
+import { decodeToken } from "../interfaces/middlewares/auth";
 
 const userRepository = new UserRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
@@ -49,6 +51,25 @@ export const userController = {
         res.type("application/json").code(500);
         throw { error: "Something went wrong" };
       }
+    }
+  },
+
+  async findUser(req: FastifyRequest, reply: FastifyReply) {
+    const findUser = new FindUser(userRepository);
+
+    const authToken = req.headers.authorization;
+    if (!authToken) throw new Error("Usuário não autenticado");
+
+    try {
+      const decodedToken = decodeToken<{ userId: string }>(authToken);
+      const response = await findUser.execute(decodedToken.userId);
+
+      reply.type("application/json").code(200);
+      return response;
+    } catch (error) {
+      reply.type("application/json").code(400);
+
+      throw { error };
     }
   },
 
