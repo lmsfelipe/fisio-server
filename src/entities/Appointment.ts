@@ -3,6 +3,7 @@ export interface IAppointment {
   dateStart: Date;
   dateEnd: Date;
   location: "clinic" | "home";
+  status?: "opened" | "closed" | "missed" | "canceled";
   patientId: string;
   professionalId: string;
   patientName?: string;

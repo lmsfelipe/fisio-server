@@ -17,6 +17,7 @@ export class EditAppointment {
       observation,
       patientId,
       professionalId,
+      status,
     } = data;
 
     const appointment = new Appointment({
@@ -27,6 +28,7 @@ export class EditAppointment {
       observation,
       patientId,
       professionalId,
+      status,
     });
 
     return this.appointmentRepository.edit(appointment.data);

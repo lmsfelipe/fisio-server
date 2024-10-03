@@ -9,4 +9,5 @@ export const appointmentSchema = z.object({
   patientId: z.string(),
   professionalId: z.string(),
   observation: z.string(),
+  status: z.optional(z.enum(["opened", "closed", "missed", "canceled"])),
 }) satisfies z.ZodType<IAppointment>;

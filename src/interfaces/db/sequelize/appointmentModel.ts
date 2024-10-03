@@ -30,6 +30,11 @@ const Appointment = sequelize.define(
       type: DataTypes.ENUM("clinic", "home"),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("opened", "closed", "missed", "canceled"),
+      defaultValue: "opened",
+      allowNull: false,
+    },
     observation: {
       type: DataTypes.STRING,
     },
