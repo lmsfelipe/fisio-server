@@ -1,8 +1,8 @@
 import { IPatient } from "../entities/Patient";
 import { IUser } from "../entities/User";
-import Address from "../interfaces/db/sequelize/addressModel";
-import PatientModel from "../interfaces/db/sequelize/patientModel";
-import UserModel from "../interfaces/db/sequelize/userModel";
+import Address from "../interfaces/db/sequelize/models/addressModel";
+import PatientModel from "../interfaces/db/sequelize/models/patientModel";
+import UserModel from "../interfaces/db/sequelize/models/userModel";
 
 export interface IPatientPayload extends IUser {
   patient: IPatient;

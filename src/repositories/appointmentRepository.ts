@@ -2,9 +2,9 @@ import { IAppointment } from "../entities/Appointment";
 import { IPatient } from "../entities/Patient";
 import { IProfessional } from "../entities/Professional";
 import sequelize from "../interfaces/db/sequelize";
-import AppointmentModel from "../interfaces/db/sequelize/appointmentModel";
-import Patient from "../interfaces/db/sequelize/patientModel";
-import Professional from "../interfaces/db/sequelize/professionalModel";
+import AppointmentModel from "../interfaces/db/sequelize/models/appointmentModel";
+import Patient from "../interfaces/db/sequelize/models/patientModel";
+import Professional from "../interfaces/db/sequelize/models/professionalModel";
 
 export interface IAppointmentRepository {
   create(

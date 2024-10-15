@@ -1,10 +1,10 @@
 import { IOwner } from "../entities/Owner";
 import { IUser } from "../entities/User";
-import Address from "../interfaces/db/sequelize/addressModel";
-import OwnerModel from "../interfaces/db/sequelize/ownerModel";
-import Patient from "../interfaces/db/sequelize/patientModel";
-import Professional from "../interfaces/db/sequelize/professionalModel";
-import UserModel from "../interfaces/db/sequelize/userModel";
+import Address from "../interfaces/db/sequelize/models/addressModel";
+import OwnerModel from "../interfaces/db/sequelize/models/ownerModel";
+import Patient from "../interfaces/db/sequelize/models/patientModel";
+import Professional from "../interfaces/db/sequelize/models/professionalModel";
+import UserModel from "../interfaces/db/sequelize/models/userModel";
 
 export interface IOwnerPayload extends IUser {
   owner: IOwner;

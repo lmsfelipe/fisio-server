@@ -3,10 +3,10 @@ import { col, fn, Op, Sequelize } from "sequelize";
 import { IAppointment } from "../entities/Appointment";
 import { IProfessional } from "../entities/Professional";
 import { IUser } from "../entities/User";
-import Address from "../interfaces/db/sequelize/addressModel";
-import Appointment from "../interfaces/db/sequelize/appointmentModel";
-import ProfessionalModel from "../interfaces/db/sequelize/professionalModel";
-import UserModel from "../interfaces/db/sequelize/userModel";
+import Address from "../interfaces/db/sequelize/models/addressModel";
+import Appointment from "../interfaces/db/sequelize/models/appointmentModel";
+import ProfessionalModel from "../interfaces/db/sequelize/models/professionalModel";
+import UserModel from "../interfaces/db/sequelize/models/userModel";
 
 export interface IProfessionalPayload extends IUser {
   professional: IProfessional;

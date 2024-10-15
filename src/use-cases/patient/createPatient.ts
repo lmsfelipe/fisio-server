@@ -1,5 +1,5 @@
 import { Patient } from "../../entities/Patient";
-import { User } from "../../entities/User";
+import { User, UserType } from "../../entities/User";
 import {
   IPatientRepository,
   IPatientPayload,
@@ -38,7 +38,7 @@ export class CreatePatient {
       phone,
       photo,
       address,
-      userType: "patient",
+      userType: UserType.PATIENT,
     });
 
     const patientEntity = new Patient({

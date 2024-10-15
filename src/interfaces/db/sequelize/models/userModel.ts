@@ -1,10 +1,11 @@
 import { DataTypes } from "sequelize";
 
-import sequelize from "./index";
+import sequelize from "../index";
 import Patient from "./patientModel";
 import Professional from "./professionalModel";
 import Address from "./addressModel";
 import Owner from "./ownerModel";
+import { Gender, Permission, UserType } from "../../../../entities/User";
 
 const User = sequelize.define(
   "user",
@@ -19,12 +20,12 @@ const User = sequelize.define(
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
     },
     password: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     birthday: {
@@ -32,28 +33,32 @@ const User = sequelize.define(
       allowNull: false,
     },
     cpf: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.CHAR(11),
       allowNull: false,
       // unique: true,
     },
     gender: {
-      type: DataTypes.ENUM("male", "female", "other"),
+      type: DataTypes.ENUM(Gender.FEMALE, Gender.MALE, Gender.OTHER),
       allowNull: false,
     },
     phone: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(11),
       allowNull: false,
     },
     photo: {
       type: DataTypes.BLOB,
     },
     userType: {
-      type: DataTypes.ENUM("patient", "professional", "owner"),
+      type: DataTypes.ENUM(
+        UserType.OWNER,
+        UserType.PATIENT,
+        UserType.PROFESSIONAL
+      ),
       allowNull: false,
     },
     permission: {
-      type: DataTypes.ENUM("view", "edit", "full"),
-      defaultValue: "view",
+      type: DataTypes.ENUM(Permission.EDIT, Permission.FULL, Permission.VIEW),
+      defaultValue: Permission.VIEW,
     },
   },
   {}
