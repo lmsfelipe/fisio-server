@@ -3,6 +3,7 @@ import { DataTypes } from "sequelize";
 import sequelize from "../index";
 import Professional from "./professionalModel";
 import Patient from "./patientModel";
+import { LocationEnum, StatusEnum } from "../../../../entities/Appointment";
 
 const Appointment = sequelize.define(
   "appointment",
@@ -27,12 +28,17 @@ const Appointment = sequelize.define(
       type: DataTypes.STRING,
     },
     location: {
-      type: DataTypes.ENUM("clinic", "home"),
+      type: DataTypes.ENUM(LocationEnum.CLINIC, LocationEnum.HOME),
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("opened", "closed", "missed", "canceled"),
-      defaultValue: "opened",
+      type: DataTypes.ENUM(
+        StatusEnum.OPENED,
+        StatusEnum.CLOSED,
+        StatusEnum.MISSED,
+        StatusEnum.CANCELED
+      ),
+      defaultValue: StatusEnum.OPENED,
       allowNull: false,
     },
     observation: {
