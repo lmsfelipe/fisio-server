@@ -7,6 +7,7 @@ import {
 import { AppointmentRepository } from "../repositories/appointmentRepository";
 import { CreateAppointment } from "../use-cases/appointment/createAppointment";
 import { EditAppointment } from "../use-cases/appointment/editAppointment";
+import { EditMultipleStatusAppointment } from "../use-cases/appointment/editMultipleStatusAppointments";
 import { FindAppointment } from "../use-cases/appointment/findAppointment";
 
 const appointmentRepository = new AppointmentRepository();
@@ -24,7 +25,7 @@ export const appointmentController = {
       reply
         .code(200)
         .header("Content-Type", "application/json; charset=utf-8")
-        .send({ success: "sucesso" });
+        .send({ success: true });
     } catch (error) {
       reply.type("application/json").code(400);
     }
@@ -39,14 +40,34 @@ export const appointmentController = {
       reply
         .code(200)
         .header("Content-Type", "application/json; charset=utf-8")
-        .send({ success: "sucesso" });
+        .send({ success: true });
+    } catch (error) {
+      reply.type("application/json").code(400);
+    }
+  },
+
+  async editMultipleStatusAppointment(
+    req: TBodyRequest<{ status: string }>,
+    reply: FastifyReply
+  ) {
+    const editMultipleStatusAppointment = new EditMultipleStatusAppointment(
+      appointmentRepository
+    );
+
+    try {
+      await editMultipleStatusAppointment.execute(req.body.status);
+
+      reply
+        .code(200)
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send({ success: true });
     } catch (error) {
       reply.type("application/json").code(400);
     }
   },
 
   async findAppointment(
-    req: TParamsRequest<{ id: number }>,
+    req: TParamsRequest<{ id: string }>,
     res: FastifyReply
   ) {
     const findAppointment = new FindAppointment(appointmentRepository);

@@ -18,9 +18,13 @@ import { loginSchema } from "../zod/userSchema";
 import { patientPayloadSchema } from "../zod/patientSchema";
 import { auth } from "../middlewares/auth";
 import { professionalPayloadSchema } from "../zod/professionalSchema";
-import { appointmentSchema } from "../zod/appointmentSchema";
+import {
+  appointmentSchema,
+  appointmentStatusSchema,
+} from "../zod/appointmentSchema";
 import { ownerPayloadSchema } from "../zod/ownerSchema";
 import { ownerController } from "../../controllers/ownerConroller";
+import { closeAppointmentsJob } from "../cron";
 
 const fastify = Fastify({
   logger: true,
@@ -109,6 +113,12 @@ fastify.put(
   appointmentController.editAppointment
 );
 
+fastify.put(
+  "/edit-multiple-status-appointment",
+  { schema: { body: appointmentStatusSchema }, preHandler: [auth] },
+  appointmentController.editMultipleStatusAppointment
+);
+
 // User
 fastify.post("/login", { schema: { body: loginSchema } }, userController.login);
 fastify.get("/find-user", { preHandler: [auth] }, userController.findUser);
@@ -134,6 +144,7 @@ sequelize
       { port: parseInt(port, 10), host },
       (err: any, address: string) => {
         if (err) throw err;
+        closeAppointmentsJob.start();
         console.log(
           `==========Server is now listening on ${address}==============`
         );

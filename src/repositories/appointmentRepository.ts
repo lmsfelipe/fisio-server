@@ -1,4 +1,5 @@
-import { IAppointment } from "../entities/Appointment";
+import { col, fn, Op, Sequelize } from "sequelize";
+import { IAppointment, StatusEnum } from "../entities/Appointment";
 import { IPatient } from "../entities/Patient";
 import { IProfessional } from "../entities/Professional";
 import sequelize from "../interfaces/db/sequelize";
@@ -11,7 +12,10 @@ export interface IAppointmentRepository {
     appointment: IAppointment
   ): Promise<{ success: boolean; error?: any; name?: string }>;
   edit(appointment: IAppointment): Promise<{ success: boolean; error?: any }>;
-  findOne(id: number): Promise<IAppointment | null>;
+  findOne(id: string): Promise<IAppointment | null>;
+  editMultipleStatus(
+    status: string
+  ): Promise<{ success: boolean; error?: any }>;
 }
 
 export class AppointmentRepository implements IAppointmentRepository {
@@ -72,7 +76,21 @@ export class AppointmentRepository implements IAppointmentRepository {
     }
   }
 
-  findOne(id: number): Promise<IAppointment> {
+  findOne(id: string): Promise<IAppointment> {
     return AppointmentModel.findByPk(id);
+  }
+
+  async editMultipleStatus(status: StatusEnum) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    return AppointmentModel.update(
+      { status },
+      {
+        where: Sequelize.where(fn("DATE", col("dateStart")), {
+          [Op.eq]: new Date(yesterday),
+        }),
+      }
+    );
   }
 }
