@@ -8,7 +8,10 @@ export class FindUser {
     this.userRepository = userRepository;
   }
 
-  async execute(email: string): Promise<IUser | null> {
-    return await this.userRepository.findOne(email);
+  async execute(
+    identifier: string,
+    value: string | number
+  ): Promise<IUser | null> {
+    return await this.userRepository.findOne(identifier, value);
   }
 }

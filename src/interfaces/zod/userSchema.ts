@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IUser } from "../../entities/User";
+import { Gender, IUser, UserType } from "../../entities/User";
 import { addressSchema } from "./addressSchema";
 
 export const userSchema = z.object({
@@ -8,11 +8,13 @@ export const userSchema = z.object({
   password: z.string(),
   birthday: z.coerce.date(),
   cpf: z.string().length(11),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum([Gender.FEMALE, Gender.MALE, Gender.OTHER]),
   phone: z.string().length(11),
   photo: z.optional(z.instanceof(File)),
   address: addressSchema,
-  userType: z.optional(z.enum(["patient", "professional", "owner"])),
+  userType: z.optional(
+    z.enum([UserType.OWNER, UserType.PATIENT, UserType.PROFESSIONAL])
+  ),
 }) satisfies z.ZodType<IUser>;
 
 // Login

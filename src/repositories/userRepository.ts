@@ -1,20 +1,20 @@
 import { IProfessional } from "../entities/Professional";
 import { IUser } from "../entities/User";
-import Professional from "../interfaces/db/sequelize/professionalModel";
-import UserModel from "../interfaces/db/sequelize/userModel";
+import Professional from "../interfaces/db/sequelize/models/professionalModel";
+import UserModel from "../interfaces/db/sequelize/models/userModel";
 
 export interface IUserProfessional extends IUser {
   professional: IProfessional;
 }
 
 export interface IUserRepository {
-  findOne(id: string): Promise<IUser | null>;
+  findOne(identifier: string, value: string | number): Promise<IUser | null>;
   findOneProfessional(id: string): Promise<IUserProfessional | null>;
 }
 
 export class UserRepository implements IUserRepository {
-  findOne(id: string): Promise<IUser | null> {
-    return UserModel.findOne({ where: { id } });
+  findOne(identifier: string, value: string | number): Promise<IUser | null> {
+    return UserModel.findOne({ where: { [identifier]: value } });
   }
 
   findOneProfessional(email: string): Promise<IUserProfessional | null> {

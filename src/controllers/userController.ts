@@ -17,12 +17,12 @@ const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
 export const userController = {
   async login(req: TBodyRequest<TLoginSchema>, res: FastifyReply) {
-    const findOne = new FindUser(userRepository);
+    const findUser = new FindUser(userRepository);
 
     const { email, password } = req.body;
 
     try {
-      const user = await findOne.execute(email);
+      const user = await findUser.execute("email", email);
       const errorMessage = "Nenhum usuário foi encontrado";
 
       if (!user) {
@@ -62,7 +62,7 @@ export const userController = {
 
     try {
       const decodedToken = decodeToken<{ userId: string }>(authToken);
-      const response = await findUser.execute(decodedToken.userId);
+      const response = await findUser.execute("id", decodedToken.userId);
 
       reply.type("application/json").code(200);
       return response;
