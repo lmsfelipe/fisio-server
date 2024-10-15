@@ -86,7 +86,7 @@ fastify.get(
 // Owner
 fastify.post(
   "/create-owner",
-  { schema: { body: ownerPayloadSchema }, preHandler: [auth] },
+  { schema: { body: ownerPayloadSchema } },
   ownerController.createOwner
 );
 
