@@ -35,8 +35,7 @@ const Appointment = sequelize.define(
       type: DataTypes.ENUM(
         StatusEnum.OPENED,
         StatusEnum.CLOSED,
-        StatusEnum.MISSED,
-        StatusEnum.CANCELED
+        StatusEnum.MISSED
       ),
       defaultValue: StatusEnum.OPENED,
       allowNull: false,
@@ -45,7 +44,7 @@ const Appointment = sequelize.define(
       type: DataTypes.STRING,
     },
   },
-  {}
+  { paranoid: true }
 );
 
 Appointment.belongsTo(Professional);

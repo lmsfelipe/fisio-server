@@ -7,7 +7,6 @@ export enum StatusEnum {
   OPENED = "opened",
   CLOSED = "closed",
   MISSED = "missed",
-  CANCELED = "canceled",
 }
 
 export interface IAppointment {

@@ -6,8 +6,9 @@ import {
 } from "../interfaces/fastify/requestTypes";
 import { AppointmentRepository } from "../repositories/appointmentRepository";
 import { CreateAppointment } from "../use-cases/appointment/createAppointment";
+import { DeleteAppointment } from "../use-cases/appointment/deleteAppointment";
 import { EditAppointment } from "../use-cases/appointment/editAppointment";
-import { EditMultipleStatusAppointment } from "../use-cases/appointment/editMultipleStatusAppointments";
+import { EditStatusAppointment } from "../use-cases/appointment/editStatusAppointments";
 import { FindAppointment } from "../use-cases/appointment/findAppointment";
 
 const appointmentRepository = new AppointmentRepository();
@@ -25,9 +26,26 @@ export const appointmentController = {
       reply
         .code(200)
         .header("Content-Type", "application/json; charset=utf-8")
+        .send({ success: true, data: req.body });
+    } catch (error) {
+      reply.type("application/json").code(400);
+    }
+  },
+
+  async deleteAppointment(req: TBodyRequest<number>, reply: FastifyReply) {
+    const deleteAppointment = new DeleteAppointment(appointmentRepository);
+
+    try {
+      await deleteAppointment.execute(req.body);
+
+      reply
+        .code(200)
+        .header("Content-Type", "application/json; charset=utf-8")
         .send({ success: true });
     } catch (error) {
       reply.type("application/json").code(400);
+
+      throw { error };
     }
   },
 
@@ -40,22 +58,24 @@ export const appointmentController = {
       reply
         .code(200)
         .header("Content-Type", "application/json; charset=utf-8")
-        .send({ success: true });
+        .send({ success: true, data: req.body });
     } catch (error) {
       reply.type("application/json").code(400);
     }
   },
 
-  async editMultipleStatusAppointment(
-    req: TBodyRequest<{ status: string }>,
+  async editStatusAppointment(
+    req: TBodyRequest<{ id: string; status: string }>,
     reply: FastifyReply
   ) {
-    const editMultipleStatusAppointment = new EditMultipleStatusAppointment(
+    const editStatusAppointment = new EditStatusAppointment(
       appointmentRepository
     );
 
+    const { id, status } = req.body;
+
     try {
-      await editMultipleStatusAppointment.execute(req.body.status);
+      await editStatusAppointment.execute(id, status);
 
       reply
         .code(200)

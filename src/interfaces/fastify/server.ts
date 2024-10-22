@@ -21,6 +21,7 @@ import { professionalPayloadSchema } from "../zod/professionalSchema";
 import {
   appointmentSchema,
   appointmentStatusSchema,
+  deleteappointmentSchema,
 } from "../zod/appointmentSchema";
 import { ownerPayloadSchema } from "../zod/ownerSchema";
 import { ownerController } from "../../controllers/ownerConroller";
@@ -113,10 +114,16 @@ fastify.put(
   appointmentController.editAppointment
 );
 
+fastify.delete(
+  "/delete-appointment",
+  { schema: { body: deleteappointmentSchema }, preHandler: [auth] },
+  appointmentController.deleteAppointment
+);
+
 fastify.put(
-  "/edit-multiple-status-appointment",
+  "/edit-status-appointment",
   { schema: { body: appointmentStatusSchema }, preHandler: [auth] },
-  appointmentController.editMultipleStatusAppointment
+  appointmentController.editStatusAppointment
 );
 
 // User

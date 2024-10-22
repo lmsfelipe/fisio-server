@@ -14,20 +14,13 @@ export const appointmentSchema = z.object({
   professionalId: z.string(),
   observation: z.string(),
   status: z.optional(
-    z.enum([
-      StatusEnum.OPENED,
-      StatusEnum.CLOSED,
-      StatusEnum.MISSED,
-      StatusEnum.CANCELED,
-    ])
+    z.enum([StatusEnum.OPENED, StatusEnum.CLOSED, StatusEnum.MISSED])
   ),
 }) satisfies z.ZodType<IAppointment>;
 
 export const appointmentStatusSchema = z.object({
-  status: z.enum([
-    StatusEnum.OPENED,
-    StatusEnum.CLOSED,
-    StatusEnum.MISSED,
-    StatusEnum.CANCELED,
-  ]),
+  id: z.number(),
+  status: z.enum([StatusEnum.OPENED, StatusEnum.CLOSED, StatusEnum.MISSED]),
 });
+
+export const deleteappointmentSchema = z.number();

@@ -11,9 +11,14 @@ export interface IAppointmentRepository {
   create(
     appointment: IAppointment
   ): Promise<{ success: boolean; error?: any; name?: string }>;
+  delete(id: number): Promise<{ success: boolean; error?: any }>;
   edit(appointment: IAppointment): Promise<{ success: boolean; error?: any }>;
   findOne(id: string): Promise<IAppointment | null>;
   editMultipleStatus(
+    status: string
+  ): Promise<{ success: boolean; error?: any }>;
+  editStatus(
+    id: string,
     status: string
   ): Promise<{ success: boolean; error?: any }>;
 }
@@ -48,6 +53,10 @@ export class AppointmentRepository implements IAppointmentRepository {
     }
   }
 
+  delete(id: number) {
+    return AppointmentModel.destroy({ where: { id } });
+  }
+
   async edit(
     payload: IAppointment
   ): Promise<{ success: boolean; error?: any }> {
@@ -80,7 +89,11 @@ export class AppointmentRepository implements IAppointmentRepository {
     return AppointmentModel.findByPk(id);
   }
 
-  async editMultipleStatus(status: StatusEnum) {
+  editStatus(id: string, status: StatusEnum) {
+    return AppointmentModel.update({ status }, { where: { id } });
+  }
+
+  editMultipleStatus(status: StatusEnum) {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
