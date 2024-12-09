@@ -4,6 +4,7 @@ import {
   TBodyRequest,
   TParamsRequest,
 } from "../interfaces/fastify/requestTypes";
+import { decodeToken } from "../interfaces/middlewares/auth";
 import {
   IOwnerPayload,
   OwnerRepository,
@@ -29,17 +30,20 @@ export const ownerController = {
     }
   },
 
-  async findOneOwner(req: TParamsRequest<{ id: string }>, res: FastifyReply) {
+  async findOwner(req: FastifyRequest, reply: FastifyReply) {
     const findOwner = new FindOwner(ownerRepository);
 
-    try {
-      const response = await findOwner.execute(req.params.id);
+    const authToken = req.headers.authorization;
+    if (!authToken) throw new Error("Usuário não autenticado");
 
-      res.type("application/json").code(200);
+    try {
+      const decodedToken = decodeToken<{ userId: string }>(authToken);
+      const response = await findOwner.execute(decodedToken.userId);
+
+      reply.type("application/json").code(200);
       return response;
     } catch (error) {
-      res.type("application/json").code(400);
-      console.log("owner", error);
+      reply.type("application/json").code(400);
 
       throw { error };
     }

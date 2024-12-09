@@ -95,11 +95,7 @@ fastify.post(
   ownerController.createOwner
 );
 
-fastify.get(
-  "/find-owner/:id",
-  { preHandler: [auth] },
-  ownerController.findOneOwner
-);
+fastify.get("/find-owner", ownerController.findOwner);
 
 // Appointment
 fastify.post(

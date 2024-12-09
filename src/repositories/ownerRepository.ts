@@ -2,8 +2,6 @@ import { IOwner } from "../entities/Owner";
 import { IUser } from "../entities/User";
 import Address from "../interfaces/db/sequelize/models/addressModel";
 import OwnerModel from "../interfaces/db/sequelize/models/ownerModel";
-import Patient from "../interfaces/db/sequelize/models/patientModel";
-import Professional from "../interfaces/db/sequelize/models/professionalModel";
 import UserModel from "../interfaces/db/sequelize/models/userModel";
 
 export interface IOwnerPayload extends IUser {
@@ -12,7 +10,7 @@ export interface IOwnerPayload extends IUser {
 
 export interface IOwnerRepository {
   create(payload: IOwnerPayload): Promise<{ success: boolean; id: string }>;
-  findOne(ownerId: string): Promise<IOwnerPayload | null>;
+  findOne(ownerId: string): Promise<IOwner | null>;
 }
 
 export class OwnerRepository implements IOwnerRepository {
@@ -22,17 +20,7 @@ export class OwnerRepository implements IOwnerRepository {
     });
   }
 
-  findOne(id: string): Promise<IOwnerPayload> {
-    return OwnerModel.findOne({
-      where: { id },
-      include: [
-        {
-          model: Professional,
-          as: "professionals",
-          where: { specialization: "phisio" },
-        },
-        { model: Patient, as: "patients" },
-      ],
-    });
+  findOne(userId: string): Promise<IOwner> {
+    return OwnerModel.findOne({ where: { userId } });
   }
 }

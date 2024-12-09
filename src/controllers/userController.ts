@@ -41,7 +41,7 @@ export const userController = {
       });
 
       res.type("application/json").code(200);
-      return { token };
+      return { token, id };
     } catch (error) {
       if (error instanceof Error) {
         // TODO: standardize errors

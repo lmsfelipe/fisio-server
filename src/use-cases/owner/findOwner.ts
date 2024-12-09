@@ -1,7 +1,5 @@
-import {
-  IOwnerPayload,
-  IOwnerRepository,
-} from "../../repositories/ownerRepository";
+import { IOwner } from "../../entities/Owner";
+import { IOwnerRepository } from "../../repositories/ownerRepository";
 
 export class FindOwner {
   ownerRepository: IOwnerRepository;
@@ -10,7 +8,7 @@ export class FindOwner {
     this.ownerRepository = ownerRepository;
   }
 
-  async execute(id: string): Promise<IOwnerPayload | null> {
+  async execute(id: string): Promise<IOwner | null> {
     return await this.ownerRepository.findOne(id);
   }
 }
