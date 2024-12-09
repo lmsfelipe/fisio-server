@@ -23,7 +23,7 @@ const Patient = sequelize.define(
     },
     fatherName: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     diagnosis: {
       type: DataTypes.STRING,

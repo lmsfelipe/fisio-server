@@ -1,7 +1,7 @@
 export interface IAddress {
-  addressableType: "user" | "company";
+  addressableType?: "user" | "company";
   street: string;
-  number: number;
+  number: string;
   neighborhood: string;
   city: string;
   state: string;
