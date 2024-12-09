@@ -37,14 +37,17 @@ export class CreatePatient {
       gender,
       phone,
       photo,
-      address,
+      address: {
+        ...address,
+        addressableType: "user",
+      },
       userType: UserType.PATIENT,
     });
 
     const patientEntity = new Patient({
-      name,
+      name: patient.name,
       ownerId: patient.ownerId,
-      fatherName: patient.fatherName,
+      ...(patient.fatherName ? { fatherName: patient.fatherName } : {}),
       motherName: patient.motherName,
       diagnosis: patient.diagnosis,
     });
