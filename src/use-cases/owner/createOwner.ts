@@ -1,5 +1,5 @@
 import { Owner } from "../../entities/Owner";
-import { User } from "../../entities/User";
+import { Permission, User, UserType } from "../../entities/User";
 import {
   IOwnerPayload,
   IOwnerRepository,
@@ -38,8 +38,8 @@ export class CreateOwner {
       phone,
       photo,
       address,
-      userType: "owner",
-      permission: "full",
+      userType: UserType.OWNER,
+      permission: Permission.FULL,
     });
 
     const ownerEntity = new Owner({
