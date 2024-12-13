@@ -10,7 +10,10 @@ export class FindProfessionalsAppointments {
     this.professionalRepository = professionalRepository;
   }
 
-  async execute(date: string): Promise<IProfessionalWithAppointment[] | []> {
-    return this.professionalRepository.findAllWithAppointments(date);
+  async execute(
+    date: string,
+    ownerId: string
+  ): Promise<IProfessionalWithAppointment[] | []> {
+    return this.professionalRepository.findAllWithAppointments(date, ownerId);
   }
 }

@@ -25,7 +25,8 @@ export interface IProfessionalRepository {
     id: number
   ): Promise<IProfessionalWithAppointment | null>;
   findAllWithAppointments(
-    date: string
+    date: string,
+    ownerId: string
   ): Promise<IProfessionalWithAppointment[] | []>;
 }
 
@@ -50,11 +51,13 @@ export class ProfessionalRepository implements IProfessionalRepository {
   }
 
   findAllWithAppointments(
-    date: string
+    date: string,
+    ownerId: string
   ): Promise<IProfessionalWithAppointment[]> {
     return ProfessionalModel.findAll({
       where: {
         specialization: "phisio",
+        ownerId,
       },
       include: {
         model: Appointment,
