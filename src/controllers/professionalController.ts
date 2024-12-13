@@ -12,6 +12,7 @@ import { CreateProfessional } from "../use-cases/professional/createProfessional
 import { FindProfessionals } from "../use-cases/professional/findProfessionals";
 import { FindProfessionalAppointments } from "../use-cases/professional/findProfessionalAppointments";
 import { FindProfessionalsAppointments } from "../use-cases/professional/findProfessionalsAppointments";
+import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const professionalRepository = new ProfessionalRepository();
 
@@ -87,7 +88,11 @@ export const professionalController = {
     if (!date) throw new Error("Uma data deve ser fornecida");
 
     try {
-      const response = await findProfessionalsWithAppointments.execute(date);
+      const { ownerId } = decodeFromAuth(req.headers.authorization);
+      const response = await findProfessionalsWithAppointments.execute(
+        date,
+        ownerId
+      );
       res.type("application/json").code(200);
 
       return response;

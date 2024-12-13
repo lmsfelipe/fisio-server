@@ -3,6 +3,7 @@ import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 
 export interface IOwner {
+  id?: string;
   name: string;
   companyName: string;
   cnpj: string;

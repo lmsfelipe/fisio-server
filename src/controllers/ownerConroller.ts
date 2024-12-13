@@ -11,6 +11,7 @@ import {
 } from "../repositories/ownerRepository";
 import { CreateOwner } from "../use-cases/owner/createOwner";
 import { FindOwner } from "../use-cases/owner/findOwner";
+import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const ownerRepository = new OwnerRepository();
 
@@ -33,11 +34,8 @@ export const ownerController = {
   async findOwner(req: FastifyRequest, reply: FastifyReply) {
     const findOwner = new FindOwner(ownerRepository);
 
-    const authToken = req.headers.authorization;
-    if (!authToken) throw new Error("Usuário não autenticado");
-
     try {
-      const decodedToken = decodeToken<{ userId: string }>(authToken);
+      const decodedToken = decodeFromAuth(req.headers.authorization);
       const response = await findOwner.execute(decodedToken.userId);
 
       reply.type("application/json").code(200);
