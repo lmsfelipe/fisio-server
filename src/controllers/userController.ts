@@ -10,14 +10,18 @@ import {
   FastifyRequest,
 } from "../interfaces/fastify/requestTypes";
 import { FindUserProfessional } from "../use-cases/user/findUserProfessional";
-import { decodeToken } from "../interfaces/middlewares/auth";
+import { FindOwner } from "../use-cases/owner/findOwner";
+import { OwnerRepository } from "../repositories/ownerRepository";
+import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const userRepository = new UserRepository();
+const ownerRepository = new OwnerRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
 export const userController = {
   async login(req: TBodyRequest<TLoginSchema>, res: FastifyReply) {
     const findUser = new FindUser(userRepository);
+    const findOwner = new FindOwner(ownerRepository);
 
     const { email, password } = req.body;
 
@@ -30,18 +34,20 @@ export const userController = {
       }
 
       const { id, userType } = user;
-      const isPasswordEqual = password === user.password;
 
-      if (!isPasswordEqual) {
+      if (password !== user.password) {
         throw new Error(errorMessage);
       }
 
-      const token = jwt.sign({ userId: id, userType }, jwtSecret, {
+      const owner = await findOwner.execute(id as string);
+      const ownerId = owner?.id || null;
+
+      const token = jwt.sign({ userId: id, userType, ownerId }, jwtSecret, {
         expiresIn: "1y",
       });
 
       res.type("application/json").code(200);
-      return { token, id };
+      return { token, id, ownerId };
     } catch (error) {
       if (error instanceof Error) {
         // TODO: standardize errors
@@ -57,11 +63,8 @@ export const userController = {
   async findUser(req: FastifyRequest, reply: FastifyReply) {
     const findUser = new FindUser(userRepository);
 
-    const authToken = req.headers.authorization;
-    if (!authToken) throw new Error("Usuário não autenticado");
-
     try {
-      const decodedToken = decodeToken<{ userId: string }>(authToken);
+      const decodedToken = decodeFromAuth(req.headers.authorization);
       const response = await findUser.execute("id", decodedToken.userId);
 
       reply.type("application/json").code(200);
