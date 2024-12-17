@@ -1,19 +1,16 @@
-// TODO: Refactor to consume env variables
-
+require("dotenv/config");
 const Sequelize = require("sequelize");
-const env = process.env.NODE_ENV || "development";
-const config = require("./config/config.json")[env];
 
-let sequelize: typeof Sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+const {
+  PG_USERNAME = "myuser",
+  PG_PASSWORD = "mypassword",
+  PG_DATABASE = "mydatabase",
+  PG_HOST = "host.docker.internal",
+} = process.env;
+
+const sequelize = new Sequelize(PG_DATABASE, PG_USERNAME, PG_PASSWORD, {
+  host: PG_HOST,
+  dialect: "postgres",
+});
 
 export default sequelize;
