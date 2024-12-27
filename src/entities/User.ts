@@ -1,5 +1,4 @@
 import { IAddress } from "./Address";
-import { IOwner } from "./Owner";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 
@@ -23,6 +22,7 @@ export enum Permission {
 
 export interface IUser {
   id?: string;
+  companyId: string;
   name: string;
   email: string;
   password: string;
@@ -34,9 +34,8 @@ export interface IUser {
   address: IAddress;
   userType?: UserType;
   permission?: Permission;
-  patient?: IPatient;
-  professional?: IProfessional;
-  owner?: IOwner;
+  patients?: IPatient;
+  professionals?: IProfessional;
 }
 
 export class User {

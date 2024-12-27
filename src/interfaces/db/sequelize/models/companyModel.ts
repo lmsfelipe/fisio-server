@@ -4,18 +4,16 @@ import sequelize from "../index";
 import Professional from "./professionalModel";
 import Patient from "./patientModel";
 import Address from "./addressModel";
+import Appointment from "./appointmentModel";
+import User from "./userModel";
 
-const Owner = sequelize.define(
-  "owner",
+const Company = sequelize.define(
+  "company",
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     companyName: {
       type: DataTypes.STRING,
@@ -26,26 +24,35 @@ const Owner = sequelize.define(
       allowNull: false,
       // unique: true,
     },
+    logo: {
+      type: DataTypes.BLOB,
+    },
   },
   {}
 );
 
-Owner.hasMany(Professional);
-Professional.belongsTo(Owner);
+Company.hasMany(Professional);
+Professional.belongsTo(Company);
 
-Owner.hasMany(Patient);
-Patient.belongsTo(Owner);
+Company.hasMany(Patient);
+Patient.belongsTo(Company);
 
-Owner.hasOne(Address, {
+Company.hasMany(Appointment);
+Appointment.belongsTo(Company);
+
+Company.hasMany(User);
+User.belongsTo(Company);
+
+Company.hasOne(Address, {
   foreignKey: "addressableId",
   constraints: false,
   scope: {
     addressableType: "company",
   },
 });
-Address.belongsTo(Owner, {
+Address.belongsTo(Company, {
   foreignKey: "addressableId",
   constraints: false,
 });
 
-export default Owner;
+export default Company;

@@ -10,18 +10,18 @@ import {
   FastifyRequest,
 } from "../interfaces/fastify/requestTypes";
 import { FindUserProfessional } from "../use-cases/user/findUserProfessional";
-import { FindOwner } from "../use-cases/owner/findOwner";
-import { OwnerRepository } from "../repositories/ownerRepository";
+import { FindCompany } from "../use-cases/company/findCompany";
+import { CompanyRepository } from "../repositories/companyRepository";
 import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const userRepository = new UserRepository();
-const ownerRepository = new OwnerRepository();
+const companyRepository = new CompanyRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
 export const userController = {
   async login(req: TBodyRequest<TLoginSchema>, res: FastifyReply) {
     const findUser = new FindUser(userRepository);
-    const findOwner = new FindOwner(ownerRepository);
+    const findCompany = new FindCompany(companyRepository);
 
     const { email, password } = req.body;
 
@@ -39,15 +39,15 @@ export const userController = {
         throw new Error(errorMessage);
       }
 
-      const owner = await findOwner.execute(id as string);
-      const ownerId = owner?.id || null;
+      const company = await findCompany.execute(id as string);
+      const companyId = company?.id || null;
 
-      const token = jwt.sign({ userId: id, userType, ownerId }, jwtSecret, {
+      const token = jwt.sign({ userId: id, userType, companyId }, jwtSecret, {
         expiresIn: "1y",
       });
 
       res.type("application/json").code(200);
-      return { token, id, ownerId };
+      return { token, id, companyId };
     } catch (error) {
       if (error instanceof Error) {
         // TODO: standardize errors

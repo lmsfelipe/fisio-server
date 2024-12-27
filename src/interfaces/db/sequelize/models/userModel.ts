@@ -4,7 +4,6 @@ import sequelize from "../index";
 import Patient from "./patientModel";
 import Professional from "./professionalModel";
 import Address from "./addressModel";
-import Owner from "./ownerModel";
 import { Gender, Permission, UserType } from "../../../../entities/User";
 
 const User = sequelize.define(
@@ -81,8 +80,5 @@ Address.belongsTo(User, {
   foreignKey: "addressableId",
   constraints: false,
 });
-
-User.hasOne(Owner);
-Owner.belongsTo(User);
 
 export default User;

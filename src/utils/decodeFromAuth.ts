@@ -4,7 +4,7 @@ import { decodeToken } from "../interfaces/middlewares/auth";
 type TToken = {
   userId: string;
   userType: UserType;
-  ownerId: string;
+  companyId: string;
 };
 
 export function decodeFromAuth(authToken?: string) {

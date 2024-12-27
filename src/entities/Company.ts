@@ -1,21 +1,23 @@
 import { IAddress } from "./Address";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
+import { IUser } from "./User";
 
-export interface IOwner {
+export interface ICompany {
   id?: string;
-  name: string;
   companyName: string;
   cnpj: string;
   address: IAddress;
+  logo?: File;
   professionals?: IProfessional[];
   patients?: IPatient[];
+  users?: IUser[];
 }
 
-export class Owner {
-  data: IOwner;
+export class Company {
+  data: ICompany;
 
-  constructor(data: IOwner) {
+  constructor(data: ICompany) {
     this.data = data;
   }
 }
