@@ -1,6 +1,7 @@
 export interface IProfessional {
+  companyId: string;
+  userId: string;
   name: string;
-  ownerId: string;
   specialization: "phisio" | "speech" | "secretary";
 }
 

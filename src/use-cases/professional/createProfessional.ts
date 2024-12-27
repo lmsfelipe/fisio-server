@@ -26,6 +26,7 @@ export class CreateProfessional {
       photo,
       address,
       professional,
+      companyId,
     } = data;
 
     const user = new User({
@@ -38,12 +39,14 @@ export class CreateProfessional {
       phone,
       photo,
       address,
+      companyId,
       userType: UserType.PROFESSIONAL,
     });
 
     const professionalPayload = new Professional({
       name: professional.name,
-      ownerId: professional.ownerId,
+      companyId: professional.companyId,
+      userId: professional.userId,
       specialization: professional.specialization,
     });
 

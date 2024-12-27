@@ -4,7 +4,8 @@ import { IProfessional } from "../../entities/Professional";
 
 const professionalSchema = z.object({
   name: z.string(),
-  ownerId: z.string(),
+  companyId: z.string(),
+  userId: z.string(),
   specialization: z.enum(["phisio", "speech", "secretary"]),
 }) satisfies z.ZodType<IProfessional>;
 

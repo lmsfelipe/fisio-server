@@ -36,13 +36,13 @@ export const professionalController = {
   },
 
   async findProfessionals(
-    req: TParamsRequest<{ ownerId: number }>,
+    req: TParamsRequest<{ companyId: number }>,
     res: FastifyReply
   ) {
     const findProfessionals = new FindProfessionals(professionalRepository);
 
     try {
-      const response = await findProfessionals.execute(req.params.ownerId);
+      const response = await findProfessionals.execute(req.params.companyId);
       res.type("application/json").code(200);
 
       return response;
@@ -88,10 +88,10 @@ export const professionalController = {
     if (!date) throw new Error("Uma data deve ser fornecida");
 
     try {
-      const { ownerId } = decodeFromAuth(req.headers.authorization);
+      const { companyId } = decodeFromAuth(req.headers.authorization);
       const response = await findProfessionalsWithAppointments.execute(
         date,
-        ownerId
+        companyId
       );
       res.type("application/json").code(200);
 

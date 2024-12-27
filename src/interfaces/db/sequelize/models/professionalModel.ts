@@ -13,7 +13,11 @@ const Professional = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ownerId: {
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    companyId: {
       type: DataTypes.UUID,
       allowNull: false,
     },

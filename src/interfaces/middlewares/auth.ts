@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 
-const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
-
 function authError() {
   const error: any = new Error("Usuário não autenticado.");
   error.status = 401;
