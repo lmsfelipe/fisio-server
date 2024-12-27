@@ -1,7 +1,7 @@
 import { col, fn, Op, Sequelize } from "sequelize";
 
 import { IAppointment } from "../entities/Appointment";
-import { IProfessional } from "../entities/Professional";
+import { IProfessional, Specialization } from "../entities/Professional";
 import { IUser } from "../entities/User";
 import Address from "../interfaces/db/sequelize/models/addressModel";
 import Appointment from "../interfaces/db/sequelize/models/appointmentModel";
@@ -39,7 +39,7 @@ export class ProfessionalRepository implements IProfessionalRepository {
 
   findAll(companyId: number): Promise<IProfessional[]> {
     return ProfessionalModel.findAll({
-      where: { companyId, specialization: "phisio" },
+      where: { companyId, specialization: Specialization.PHISIO },
     });
   }
 
@@ -56,7 +56,7 @@ export class ProfessionalRepository implements IProfessionalRepository {
   ): Promise<IProfessionalWithAppointment[]> {
     return ProfessionalModel.findAll({
       where: {
-        specialization: "phisio",
+        specialization: Specialization.PHISIO,
         companyId,
       },
       include: {

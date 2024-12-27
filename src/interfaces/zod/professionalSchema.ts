@@ -1,12 +1,16 @@
 import { z } from "zod";
 import { userSchema } from "./userSchema";
-import { IProfessional } from "../../entities/Professional";
+import { IProfessional, Specialization } from "../../entities/Professional";
 
 const professionalSchema = z.object({
   name: z.string(),
   companyId: z.string(),
   userId: z.string(),
-  specialization: z.enum(["phisio", "speech", "secretary"]),
+  specialization: z.enum([
+    Specialization.PHISIO,
+    Specialization.SECRETARY,
+    Specialization.SPEECH,
+  ]),
 }) satisfies z.ZodType<IProfessional>;
 
 export const professionalPayloadSchema = userSchema.extend({

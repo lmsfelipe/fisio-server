@@ -6,6 +6,7 @@ import Patient from "./patientModel";
 import Address from "./addressModel";
 import Appointment from "./appointmentModel";
 import User from "./userModel";
+import { AddressableType } from "../../../../entities/Address";
 
 const Company = sequelize.define(
   "company",
@@ -47,7 +48,7 @@ Company.hasOne(Address, {
   foreignKey: "addressableId",
   constraints: false,
   scope: {
-    addressableType: "company",
+    addressableType: AddressableType.COMPANY,
   },
 });
 Address.belongsTo(Company, {
