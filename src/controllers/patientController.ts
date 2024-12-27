@@ -30,13 +30,13 @@ export const patientController = {
   },
 
   async findPatients(
-    req: TParamsRequest<{ ownerId: number }>,
+    req: TParamsRequest<{ companyId: number }>,
     res: FastifyReply
   ) {
     const findPatients = new FindPatients(patientRepository);
 
     try {
-      const response = await findPatients.execute(req.params.ownerId);
+      const response = await findPatients.execute(req.params.companyId);
       res.type("application/json").code(200);
 
       return response;

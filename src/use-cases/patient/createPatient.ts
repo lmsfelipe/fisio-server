@@ -26,6 +26,7 @@ export class CreatePatient {
       photo,
       patient,
       address,
+      companyId,
     } = data;
 
     const user = new User({
@@ -37,16 +38,20 @@ export class CreatePatient {
       gender,
       phone,
       photo,
-      address: {
-        ...address,
-        addressableType: "user",
-      },
+      companyId,
+      address,
+      // TODO: Check if user address is being created properly
+      // address: {
+      //   ...address,
+      //   addressableType: "user",
+      // },
       userType: UserType.PATIENT,
     });
 
     const patientEntity = new Patient({
       name: patient.name,
-      ownerId: patient.ownerId,
+      companyId: patient.companyId,
+      userId: patient.userId,
       ...(patient.fatherName ? { fatherName: patient.fatherName } : {}),
       motherName: patient.motherName,
       diagnosis: patient.diagnosis,
