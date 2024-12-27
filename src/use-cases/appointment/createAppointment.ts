@@ -16,6 +16,7 @@ export class CreateAppointment {
       observation,
       patientId,
       professionalId,
+      companyId,
     } = data;
 
     const appointment = new Appointment({
@@ -25,6 +26,7 @@ export class CreateAppointment {
       observation,
       patientId,
       professionalId,
+      companyId,
     });
 
     return this.appointmentRepository.create(appointment.data);

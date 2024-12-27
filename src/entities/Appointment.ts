@@ -11,12 +11,13 @@ export enum StatusEnum {
 
 export interface IAppointment {
   id?: number;
+  companyId: string;
+  patientId: string;
+  professionalId: string;
   dateStart: Date;
   dateEnd: Date;
   location: LocationEnum;
   status?: StatusEnum;
-  patientId: string;
-  professionalId: string;
   patientName?: string;
   professionalName?: string;
   observation?: string;

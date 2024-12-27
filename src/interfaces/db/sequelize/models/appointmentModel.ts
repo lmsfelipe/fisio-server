@@ -13,6 +13,10 @@ const Appointment = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    companyId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     dateStart: {
       type: DataTypes.DATE,
       allowNull: false,
