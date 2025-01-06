@@ -1,4 +1,4 @@
-import { IAddress } from "./Address";
+import { AddressableType, IAddress } from "./Address";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 import { IUser } from "./User";
@@ -19,5 +19,9 @@ export class Company {
 
   constructor(data: ICompany) {
     this.data = data;
+  }
+
+  setAddressableType() {
+    this.data.address.addressableType = AddressableType.COMPANY;
   }
 }

@@ -1,4 +1,4 @@
-import { IAddress } from "./Address";
+import { AddressableType, IAddress } from "./Address";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 
@@ -22,7 +22,7 @@ export enum Permission {
 
 export interface IUser {
   id?: string;
-  companyId: string;
+  companyId?: string;
   name: string;
   email: string;
   password: string;
@@ -43,5 +43,17 @@ export class User {
 
   constructor(data: IUser) {
     this.data = data;
+  }
+
+  setAddressableType() {
+    this.data.address.addressableType = AddressableType.USER;
+  }
+
+  setUserType(userType: UserType) {
+    this.data.userType = userType;
+  }
+
+  setPermission(permission: Permission) {
+    this.data.permission = permission;
   }
 }

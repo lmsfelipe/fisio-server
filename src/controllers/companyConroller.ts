@@ -21,11 +21,16 @@ export const companyController = {
       const response = await createCompany.execute(req.body);
 
       res.type("application/json").code(200);
-      return { success: true, id: response.id };
+      return { success: response.success };
     } catch (error) {
-      res.type("application/json").code(400);
-
-      throw { error };
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        res.type("application/json").code(400);
+        throw { error: error.message };
+      } else {
+        res.type("application/json").code(500);
+        throw { error: "Ocorreu um erro" };
+      }
     }
   },
 

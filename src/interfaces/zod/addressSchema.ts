@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IAddress } from "../../entities/Address";
+import { AddressableType, IAddress } from "../../entities/Address";
 
 export const addressSchema = z.object({
   street: z.string(),
@@ -8,5 +8,4 @@ export const addressSchema = z.object({
   city: z.string(),
   state: z.string(),
   zipCode: z.string(),
-  companyId: z.string(),
 }) satisfies z.ZodType<IAddress>;

@@ -12,7 +12,6 @@ export const userSchema = z.object({
   phone: z.string().length(11),
   photo: z.optional(z.instanceof(File)),
   address: addressSchema,
-  companyId: z.string(),
   userType: z.optional(
     z.enum([UserType.OWNER, UserType.PATIENT, UserType.PROFESSIONAL])
   ),

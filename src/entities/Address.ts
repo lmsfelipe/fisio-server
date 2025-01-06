@@ -6,7 +6,7 @@ export enum AddressableType {
 export interface IAddress {
   id?: string;
   addressableId?: string;
-  companyId: string;
+  companyId?: string;
   addressableType?: AddressableType;
   street: string;
   number: string;
@@ -14,6 +14,7 @@ export interface IAddress {
   city: string;
   state: string;
   zipCode: string;
+  //TODO ========> Add complement
 }
 
 export class Address {

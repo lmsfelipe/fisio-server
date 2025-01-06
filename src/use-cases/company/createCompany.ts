@@ -12,17 +12,16 @@ export class CreateCompany {
     this.companyRepository = companyRepository;
   }
 
-  async execute(
-    payload: ICompanyPayload
-  ): Promise<{ success: boolean; id: string }> {
+  async execute(payload: ICompanyPayload): Promise<{ success: boolean }> {
     const { address, cnpj, companyName, logo, user } = payload;
 
     const company = new Company({ cnpj, companyName, logo, address });
-    const userEntity = new User({
-      ...user,
-      userType: UserType.OWNER,
-      permission: Permission.FULL,
-    });
+    company.setAddressableType();
+
+    const userEntity = new User(user);
+    userEntity.setAddressableType();
+    userEntity.setUserType(UserType.OWNER);
+    userEntity.setPermission(Permission.FULL);
 
     return await this.companyRepository.create({
       ...company.data,
