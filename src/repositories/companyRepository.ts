@@ -67,6 +67,6 @@ export class CompanyRepository implements ICompanyRepository {
   }
 
   findOne(companyId: string): Promise<ICompany> {
-    return CompanyModel.findOne({ where: { companyId } });
+    return CompanyModel.findOne({ where: { id: companyId } });
   }
 }

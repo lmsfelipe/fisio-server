@@ -10,18 +10,14 @@ import {
   FastifyRequest,
 } from "../interfaces/fastify/requestTypes";
 import { FindUserProfessional } from "../use-cases/user/findUserProfessional";
-import { FindCompany } from "../use-cases/company/findCompany";
-import { CompanyRepository } from "../repositories/companyRepository";
 import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const userRepository = new UserRepository();
-const companyRepository = new CompanyRepository();
 const jwtSecret = process.env.JWT_SECRET || "mysupersecret";
 
 export const userController = {
   async login(req: TBodyRequest<TLoginSchema>, res: FastifyReply) {
     const findUser = new FindUser(userRepository);
-    const findCompany = new FindCompany(companyRepository);
 
     const { email, password } = req.body;
 
@@ -33,14 +29,11 @@ export const userController = {
         throw new Error(errorMessage);
       }
 
-      const { id, userType } = user;
+      const { id, userType, companyId } = user;
 
       if (password !== user.password) {
         throw new Error(errorMessage);
       }
-
-      const company = await findCompany.execute(id as string);
-      const companyId = company?.id || null;
 
       const token = jwt.sign({ userId: id, userType, companyId }, jwtSecret, {
         expiresIn: "1y",
