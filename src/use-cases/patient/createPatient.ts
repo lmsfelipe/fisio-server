@@ -45,11 +45,11 @@ export class CreatePatient {
     user.setAddressableType();
     user.setUserType(UserType.PATIENT);
     user.setPermission(Permission.VIEW);
+    user.setAddressCompanyId();
 
     const patientEntity = new Patient({
       name: patient.name,
-      companyId: patient.companyId,
-      userId: patient.userId,
+      companyId: companyId as string,
       ...(patient.fatherName ? { fatherName: patient.fatherName } : {}),
       motherName: patient.motherName,
       diagnosis: patient.diagnosis,

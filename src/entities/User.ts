@@ -49,6 +49,10 @@ export class User {
     this.data.address.addressableType = AddressableType.USER;
   }
 
+  setAddressCompanyId() {
+    this.data.address.companyId = this.data.companyId;
+  }
+
   setUserType(userType: UserType) {
     this.data.userType = userType;
   }

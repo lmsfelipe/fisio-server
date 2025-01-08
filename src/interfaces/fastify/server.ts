@@ -60,11 +60,19 @@ fastify.setErrorHandler((error, _, reply) => {
 // Patient
 fastify.post(
   "/create-patient",
-  { schema: { body: patientPayloadSchema } },
+  { schema: { body: patientPayloadSchema }, preHandler: [auth] },
   patientController.createPatient
 );
-fastify.get("/find-patients/:companyId", patientController.findPatients);
-fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
+fastify.get(
+  "/find-patients/:companyId",
+  { preHandler: [auth] },
+  patientController.findPatients
+);
+fastify.get(
+  "/find-patient-address/:id",
+  { preHandler: [auth] },
+  patientController.findCompletePatient
+);
 
 // Professional
 fastify.post(

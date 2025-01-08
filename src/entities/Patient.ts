@@ -1,7 +1,7 @@
 export interface IPatient {
   id?: string;
-  companyId: string;
-  userId: string;
+  companyId?: string;
+  userId?: string;
   name: string;
   fatherName?: string;
   motherName: string;
