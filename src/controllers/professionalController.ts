@@ -21,17 +21,27 @@ export const professionalController = {
     req: TBodyRequest<IProfessionalPayload>,
     res: FastifyReply
   ) {
+    const { companyId } = decodeFromAuth(req.headers.authorization);
     const createProfessional = new CreateProfessional(professionalRepository);
 
     try {
-      const response = await createProfessional.execute(req.body);
+      const response = await createProfessional.execute({
+        ...req.body,
+        companyId,
+      });
 
       res.type("application/json").code(200);
       return { success: true, name: response.name };
     } catch (error) {
-      res.type("application/json").code(400);
-
-      throw { error };
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        res.type("application/json").code(400);
+        console.log("error", error);
+        throw { error: error.message };
+      } else {
+        res.type("application/json").code(500);
+        throw { error: "Ocorreu um erro" };
+      }
     }
   },
 
@@ -88,6 +98,7 @@ export const professionalController = {
     if (!date) throw new Error("Uma data deve ser fornecida");
 
     try {
+      // TODO: Mayve it can be removed with DefaultScope
       const { companyId } = decodeFromAuth(req.headers.authorization);
       const response = await findProfessionalsWithAppointments.execute(
         date,

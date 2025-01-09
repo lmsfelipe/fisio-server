@@ -7,6 +7,7 @@ import Address from "../interfaces/db/sequelize/models/addressModel";
 import Appointment from "../interfaces/db/sequelize/models/appointmentModel";
 import ProfessionalModel from "../interfaces/db/sequelize/models/professionalModel";
 import UserModel from "../interfaces/db/sequelize/models/userModel";
+import sequelize from "../interfaces/db/sequelize";
 
 export interface IProfessionalPayload extends IUser {
   professional: IProfessional;
@@ -31,9 +32,35 @@ export interface IProfessionalRepository {
 }
 
 export class ProfessionalRepository implements IProfessionalRepository {
-  create(
+  async create(
     payload: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }> {
+    const response = { success: false, name: "" };
+
+    try {
+      await sequelize.transaction(async (transaction: any) => {
+        const { professional, ...user } = payload;
+
+        const userResp: IUser = await UserModel.create(user, {
+          transaction,
+          include: [Address],
+        });
+        const professionalResp: IProfessional = await ProfessionalModel.create(
+          { ...professional, userId: userResp.id },
+          { transaction }
+        );
+
+        response.success = true;
+        response.name = professionalResp.name;
+      });
+    } catch (error) {
+      throw new Error("Não foi possível criar o profissional", {
+        cause: error,
+      });
+    }
+
+    return response;
+
     return UserModel.create(payload, { include: [Address, ProfessionalModel] });
   }
 

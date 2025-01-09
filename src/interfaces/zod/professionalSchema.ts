@@ -4,8 +4,6 @@ import { IProfessional, Specialization } from "../../entities/Professional";
 
 const professionalSchema = z.object({
   name: z.string(),
-  companyId: z.string(),
-  userId: z.string(),
   specialization: z.enum([
     Specialization.PHISIO,
     Specialization.SECRETARY,

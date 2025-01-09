@@ -45,11 +45,11 @@ export class CreateProfessional {
     user.setAddressableType();
     user.setUserType(UserType.PROFESSIONAL);
     user.setPermission(Permission.VIEW);
+    user.setAddressCompanyId();
 
     const professionalPayload = new Professional({
       name: professional.name,
-      companyId: professional.companyId,
-      userId: professional.userId,
+      companyId: companyId as string,
       specialization: professional.specialization,
     });
 

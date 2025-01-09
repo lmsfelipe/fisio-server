@@ -5,8 +5,8 @@ export enum Specialization {
 }
 
 export interface IProfessional {
-  companyId: string;
-  userId: string;
+  companyId?: string;
+  userId?: string;
   name: string;
   specialization: Specialization;
 }
