@@ -11,7 +11,7 @@ export enum StatusEnum {
 
 export interface IAppointment {
   id?: number;
-  companyId: string;
+  companyId?: string;
   patientId: string;
   professionalId: string;
   dateStart: Date;

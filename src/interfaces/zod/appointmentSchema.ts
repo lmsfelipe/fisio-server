@@ -9,7 +9,6 @@ export const appointmentSchema = z.object({
   id: z.optional(z.number()),
   patientId: z.string(),
   professionalId: z.string(),
-  companyId: z.string(),
   dateStart: z.coerce.date(),
   dateEnd: z.coerce.date(),
   location: z.enum([LocationEnum.CLINIC, LocationEnum.HOME]),

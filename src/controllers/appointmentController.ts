@@ -10,6 +10,7 @@ import { DeleteAppointment } from "../use-cases/appointment/deleteAppointment";
 import { EditAppointment } from "../use-cases/appointment/editAppointment";
 import { EditStatusAppointment } from "../use-cases/appointment/editStatusAppointments";
 import { FindAppointment } from "../use-cases/appointment/findAppointment";
+import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const appointmentRepository = new AppointmentRepository();
 
@@ -18,10 +19,11 @@ export const appointmentController = {
     req: TBodyRequest<IAppointment>,
     reply: FastifyReply
   ) {
+    const { companyId } = decodeFromAuth(req.headers.authorization);
     const createAppointment = new CreateAppointment(appointmentRepository);
 
     try {
-      await createAppointment.execute(req.body);
+      await createAppointment.execute({ ...req.body, companyId });
 
       reply
         .code(200)
