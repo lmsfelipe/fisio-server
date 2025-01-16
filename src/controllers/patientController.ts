@@ -10,33 +10,44 @@ import {
   TParamsRequest,
   FastifyReply,
 } from "../interfaces/fastify/requestTypes";
+import { decodeFromAuth } from "../utils/decodeFromAuth";
 
 const patientRepository = new PatientRepository();
 
 export const patientController = {
   async createPatient(req: TBodyRequest<IPatientPayload>, res: FastifyReply) {
+    const decodedToken = decodeFromAuth(req.headers.authorization);
     const createPatient = new CreatePatient(patientRepository);
 
     try {
-      const response = await createPatient.execute(req.body);
+      const response = await createPatient.execute({
+        ...req.body,
+        companyId: decodedToken.companyId,
+      });
 
       res.type("application/json").code(200);
       return { success: true, name: response.name };
     } catch (error) {
-      res.type("application/json").code(400);
-
-      throw { error };
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        res.type("application/json").code(400);
+        console.log("error", error);
+        throw { error: error.message };
+      } else {
+        res.type("application/json").code(500);
+        throw { error: "Ocorreu um erro" };
+      }
     }
   },
 
   async findPatients(
-    req: TParamsRequest<{ ownerId: number }>,
+    req: TParamsRequest<{ companyId: number }>,
     res: FastifyReply
   ) {
     const findPatients = new FindPatients(patientRepository);
 
     try {
-      const response = await findPatients.execute(req.params.ownerId);
+      const response = await findPatients.execute(req.params.companyId);
       res.type("application/json").code(200);
 
       return response;

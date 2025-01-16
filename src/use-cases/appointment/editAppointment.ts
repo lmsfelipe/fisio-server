@@ -17,6 +17,7 @@ export class EditAppointment {
       observation,
       patientId,
       professionalId,
+      companyId,
       status,
     } = data;
 
@@ -28,6 +29,7 @@ export class EditAppointment {
       observation,
       patientId,
       professionalId,
+      companyId,
       status,
     });
 

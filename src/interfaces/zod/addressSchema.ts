@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IAddress } from "../../entities/Address";
+import { AddressableType, IAddress } from "../../entities/Address";
 
 export const addressSchema = z.object({
   street: z.string(),

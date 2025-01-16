@@ -1,5 +1,4 @@
-import { IAddress } from "./Address";
-import { IOwner } from "./Owner";
+import { AddressableType, IAddress } from "./Address";
 import { IPatient } from "./Patient";
 import { IProfessional } from "./Professional";
 
@@ -23,6 +22,7 @@ export enum Permission {
 
 export interface IUser {
   id?: string;
+  companyId?: string;
   name: string;
   email: string;
   password: string;
@@ -34,9 +34,8 @@ export interface IUser {
   address: IAddress;
   userType?: UserType;
   permission?: Permission;
-  patient?: IPatient;
-  professional?: IProfessional;
-  owner?: IOwner;
+  patients?: IPatient;
+  professionals?: IProfessional;
 }
 
 export class User {
@@ -44,5 +43,21 @@ export class User {
 
   constructor(data: IUser) {
     this.data = data;
+  }
+
+  setAddressableType() {
+    this.data.address.addressableType = AddressableType.USER;
+  }
+
+  setAddressCompanyId() {
+    this.data.address.companyId = this.data.companyId;
+  }
+
+  setUserType(userType: UserType) {
+    this.data.userType = userType;
+  }
+
+  setPermission(permission: Permission) {
+    this.data.permission = permission;
   }
 }

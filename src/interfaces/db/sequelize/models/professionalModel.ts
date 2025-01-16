@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../index";
+import { Specialization } from "../../../../entities/Professional";
 
 const Professional = sequelize.define(
   "professional",
@@ -13,12 +14,20 @@ const Professional = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ownerId: {
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    companyId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
     specialization: {
-      type: DataTypes.ENUM("phisio", "speech", "secretary"),
+      type: DataTypes.ENUM(
+        Specialization.PHISIO,
+        Specialization.SECRETARY,
+        Specialization.SPEECH
+      ),
       allowNull: false,
     },
   },

@@ -1,5 +1,5 @@
 import { Patient } from "../../entities/Patient";
-import { User, UserType } from "../../entities/User";
+import { Permission, User, UserType } from "../../entities/User";
 import {
   IPatientRepository,
   IPatientPayload,
@@ -26,6 +26,7 @@ export class CreatePatient {
       photo,
       patient,
       address,
+      companyId,
     } = data;
 
     const user = new User({
@@ -37,16 +38,18 @@ export class CreatePatient {
       gender,
       phone,
       photo,
-      address: {
-        ...address,
-        addressableType: "user",
-      },
-      userType: UserType.PATIENT,
+      companyId,
+      address,
     });
+
+    user.setAddressableType();
+    user.setUserType(UserType.PATIENT);
+    user.setPermission(Permission.VIEW);
+    user.setAddressCompanyId();
 
     const patientEntity = new Patient({
       name: patient.name,
-      ownerId: patient.ownerId,
+      companyId: companyId as string,
       ...(patient.fatherName ? { fatherName: patient.fatherName } : {}),
       motherName: patient.motherName,
       diagnosis: patient.diagnosis,

@@ -23,8 +23,8 @@ import {
   appointmentStatusSchema,
   deleteappointmentSchema,
 } from "../zod/appointmentSchema";
-import { ownerPayloadSchema } from "../zod/ownerSchema";
-import { ownerController } from "../../controllers/ownerConroller";
+import { companyPayloadSchema } from "../zod/companySchema";
+import { companyController } from "../../controllers/companyConroller";
 import { closeAppointmentsJob } from "../cron";
 
 const fastify = Fastify({
@@ -60,11 +60,19 @@ fastify.setErrorHandler((error, _, reply) => {
 // Patient
 fastify.post(
   "/create-patient",
-  { schema: { body: patientPayloadSchema } },
+  { schema: { body: patientPayloadSchema }, preHandler: [auth] },
   patientController.createPatient
 );
-fastify.get("/find-patients/:ownerId", patientController.findPatients);
-fastify.get("/find-patient-address/:id", patientController.findCompletePatient);
+fastify.get(
+  "/find-patients/:companyId",
+  { preHandler: [auth] },
+  patientController.findPatients
+);
+fastify.get(
+  "/find-patient-address/:id",
+  { preHandler: [auth] },
+  patientController.findCompletePatient
+);
 
 // Professional
 fastify.post(
@@ -73,7 +81,7 @@ fastify.post(
   professionalController.createProfessional
 );
 fastify.get(
-  "/find-professionals/:ownerId",
+  "/find-professionals/:companyId",
   { preHandler: [auth] },
   professionalController.findProfessionals
 );
@@ -88,14 +96,14 @@ fastify.get(
   professionalController.findProfessionalsAppointments
 );
 
-// Owner
+// Company
 fastify.post(
-  "/create-owner",
-  { schema: { body: ownerPayloadSchema } },
-  ownerController.createOwner
+  "/create-company",
+  { schema: { body: companyPayloadSchema } },
+  companyController.createCompany
 );
 
-fastify.get("/find-owner", ownerController.findOwner);
+fastify.get("/find-company", companyController.findCompany);
 
 // Appointment
 fastify.post(

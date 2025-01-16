@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../index";
+import { AddressableType } from "../../../../entities/Address";
 
 const Address = sequelize.define(
   "address",
@@ -9,8 +10,12 @@ const Address = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    companyId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
     addressableType: {
-      type: DataTypes.ENUM("user", "company"),
+      type: DataTypes.ENUM(AddressableType.USER, AddressableType.COMPANY),
       allowNull: false,
     },
     street: {

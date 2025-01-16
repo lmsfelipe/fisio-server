@@ -4,8 +4,8 @@ import sequelize from "../index";
 import Patient from "./patientModel";
 import Professional from "./professionalModel";
 import Address from "./addressModel";
-import Owner from "./ownerModel";
 import { Gender, Permission, UserType } from "../../../../entities/User";
+import { AddressableType } from "../../../../entities/Address";
 
 const User = sequelize.define(
   "user",
@@ -14,6 +14,10 @@ const User = sequelize.define(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+    },
+    companyId: {
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(100),
@@ -74,15 +78,12 @@ User.hasOne(Address, {
   foreignKey: "addressableId",
   constraints: false,
   scope: {
-    addressableType: "user",
+    addressableType: AddressableType.USER,
   },
 });
 Address.belongsTo(User, {
   foreignKey: "addressableId",
   constraints: false,
 });
-
-User.hasOne(Owner);
-Owner.belongsTo(User);
 
 export default User;

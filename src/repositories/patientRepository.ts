@@ -1,5 +1,6 @@
 import { IPatient } from "../entities/Patient";
 import { IUser } from "../entities/User";
+import sequelize from "../interfaces/db/sequelize";
 import Address from "../interfaces/db/sequelize/models/addressModel";
 import PatientModel from "../interfaces/db/sequelize/models/patientModel";
 import UserModel from "../interfaces/db/sequelize/models/userModel";
@@ -10,19 +11,41 @@ export interface IPatientPayload extends IUser {
 
 export interface IPatientRepository {
   create(payload: IPatientPayload): Promise<{ success: boolean; name: string }>;
-  findAll(ownerId: number): Promise<IPatient[] | null>;
+  findAll(companyId: number): Promise<IPatient[] | null>;
   findCompletePatient(userId: number): Promise<IPatientPayload | null>;
 }
 
 export class PatientRepository implements IPatientRepository {
-  create(
+  async create(
     payload: IPatientPayload
   ): Promise<{ success: boolean; name: string }> {
-    return UserModel.create(payload, { include: [Address, PatientModel] });
+    const response = { success: false, name: "" };
+
+    try {
+      await sequelize.transaction(async (transaction: any) => {
+        const { patient, ...user } = payload;
+
+        const userResp: IUser = await UserModel.create(user, {
+          transaction,
+          include: [Address],
+        });
+        const patientResp: IPatient = await PatientModel.create(
+          { ...patient, userId: userResp.id },
+          { transaction }
+        );
+
+        response.success = true;
+        response.name = patientResp.name;
+      });
+    } catch (error) {
+      throw new Error("Não foi possível criar o paciente", { cause: error });
+    }
+
+    return response;
   }
 
-  findAll(ownerId: number): Promise<IPatient[]> {
-    return PatientModel.findAll({ where: { ownerId } });
+  findAll(companyId: number): Promise<IPatient[]> {
+    return PatientModel.findAll({ where: { companyId } });
   }
 
   findCompletePatient(userId: number): Promise<IPatientPayload | null> {

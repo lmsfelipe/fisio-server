@@ -1,7 +1,14 @@
+export enum Specialization {
+  PHISIO = "phisio",
+  SPEECH = "speech",
+  SECRETARY = "secretary",
+}
+
 export interface IProfessional {
+  companyId?: string;
+  userId?: string;
   name: string;
-  ownerId: string;
-  specialization: "phisio" | "speech" | "secretary";
+  specialization: Specialization;
 }
 
 export class Professional {

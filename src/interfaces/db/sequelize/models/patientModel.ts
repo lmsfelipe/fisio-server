@@ -9,7 +9,11 @@ const Patient = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    ownerId: {
+    companyId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    userId: {
       type: DataTypes.UUID,
       allowNull: false,
     },

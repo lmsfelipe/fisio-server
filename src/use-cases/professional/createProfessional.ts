@@ -1,5 +1,5 @@
 import { Professional } from "../../entities/Professional";
-import { User, UserType } from "../../entities/User";
+import { Permission, User, UserType } from "../../entities/User";
 import {
   IProfessionalPayload,
   IProfessionalRepository,
@@ -26,6 +26,7 @@ export class CreateProfessional {
       photo,
       address,
       professional,
+      companyId,
     } = data;
 
     const user = new User({
@@ -38,12 +39,17 @@ export class CreateProfessional {
       phone,
       photo,
       address,
-      userType: UserType.PROFESSIONAL,
+      companyId,
     });
+
+    user.setAddressableType();
+    user.setUserType(UserType.PROFESSIONAL);
+    user.setPermission(Permission.VIEW);
+    user.setAddressCompanyId();
 
     const professionalPayload = new Professional({
       name: professional.name,
-      ownerId: professional.ownerId,
+      companyId: companyId as string,
       specialization: professional.specialization,
     });
 

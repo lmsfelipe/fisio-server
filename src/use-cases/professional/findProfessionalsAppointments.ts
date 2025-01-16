@@ -12,8 +12,8 @@ export class FindProfessionalsAppointments {
 
   async execute(
     date: string,
-    ownerId: string
+    companyId: string
   ): Promise<IProfessionalWithAppointment[] | []> {
-    return this.professionalRepository.findAllWithAppointments(date, ownerId);
+    return this.professionalRepository.findAllWithAppointments(date, companyId);
   }
 }

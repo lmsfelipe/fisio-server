@@ -7,11 +7,11 @@ import {
 
 export const appointmentSchema = z.object({
   id: z.optional(z.number()),
+  patientId: z.string(),
+  professionalId: z.string(),
   dateStart: z.coerce.date(),
   dateEnd: z.coerce.date(),
   location: z.enum([LocationEnum.CLINIC, LocationEnum.HOME]),
-  patientId: z.string(),
-  professionalId: z.string(),
   observation: z.string(),
   status: z.optional(
     z.enum([StatusEnum.OPENED, StatusEnum.CLOSED, StatusEnum.MISSED])

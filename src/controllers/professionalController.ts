@@ -21,28 +21,38 @@ export const professionalController = {
     req: TBodyRequest<IProfessionalPayload>,
     res: FastifyReply
   ) {
+    const { companyId } = decodeFromAuth(req.headers.authorization);
     const createProfessional = new CreateProfessional(professionalRepository);
 
     try {
-      const response = await createProfessional.execute(req.body);
+      const response = await createProfessional.execute({
+        ...req.body,
+        companyId,
+      });
 
       res.type("application/json").code(200);
       return { success: true, name: response.name };
     } catch (error) {
-      res.type("application/json").code(400);
-
-      throw { error };
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        res.type("application/json").code(400);
+        console.log("error", error);
+        throw { error: error.message };
+      } else {
+        res.type("application/json").code(500);
+        throw { error: "Ocorreu um erro" };
+      }
     }
   },
 
   async findProfessionals(
-    req: TParamsRequest<{ ownerId: number }>,
+    req: TParamsRequest<{ companyId: number }>,
     res: FastifyReply
   ) {
     const findProfessionals = new FindProfessionals(professionalRepository);
 
     try {
-      const response = await findProfessionals.execute(req.params.ownerId);
+      const response = await findProfessionals.execute(req.params.companyId);
       res.type("application/json").code(200);
 
       return response;
@@ -88,10 +98,11 @@ export const professionalController = {
     if (!date) throw new Error("Uma data deve ser fornecida");
 
     try {
-      const { ownerId } = decodeFromAuth(req.headers.authorization);
+      // TODO: Mayve it can be removed with DefaultScope
+      const { companyId } = decodeFromAuth(req.headers.authorization);
       const response = await findProfessionalsWithAppointments.execute(
         date,
-        ownerId
+        companyId
       );
       res.type("application/json").code(200);
 

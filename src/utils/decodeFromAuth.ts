@@ -4,10 +4,10 @@ import { decodeToken } from "../interfaces/middlewares/auth";
 type TToken = {
   userId: string;
   userType: UserType;
-  ownerId: string;
+  companyId: string;
 };
 
-export function decodeFromAuth(authToken?: string) {
+export function decodeFromAuth(authToken?: string): TToken {
   if (!authToken) throw new Error("Usuário não autenticado");
   return decodeToken<TToken>(authToken);
 }
