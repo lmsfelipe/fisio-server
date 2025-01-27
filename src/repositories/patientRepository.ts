@@ -11,8 +11,8 @@ export interface IPatientPayload extends IUser {
 
 export interface IPatientRepository {
   create(payload: IPatientPayload): Promise<{ success: boolean; name: string }>;
-  findAll(companyId: number): Promise<IPatient[] | null>;
-  findCompletePatient(userId: number): Promise<IPatientPayload | null>;
+  findAll(companyId: string): Promise<IPatient[] | null>;
+  findCompletePatient(userId: string): Promise<IPatientPayload | null>;
 }
 
 export class PatientRepository implements IPatientRepository {
@@ -44,11 +44,11 @@ export class PatientRepository implements IPatientRepository {
     return response;
   }
 
-  findAll(companyId: number): Promise<IPatient[]> {
+  findAll(companyId: string): Promise<IPatient[]> {
     return PatientModel.findAll({ where: { companyId } });
   }
 
-  findCompletePatient(userId: number): Promise<IPatientPayload | null> {
+  findCompletePatient(userId: string): Promise<IPatientPayload | null> {
     return UserModel.findOne({
       where: { userId },
       include: [

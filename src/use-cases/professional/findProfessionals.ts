@@ -8,7 +8,7 @@ export class FindProfessionals {
     this.professionalRepository = professionalRepository;
   }
 
-  async execute(companyId: number): Promise<IProfessional[] | null> {
+  async execute(companyId: string): Promise<IProfessional[] | null> {
     return await this.professionalRepository.findAll(companyId);
   }
 }

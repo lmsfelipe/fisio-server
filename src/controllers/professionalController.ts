@@ -1,5 +1,6 @@
 import {
   FastifyReply,
+  FastifyRequest,
   TBodyRequest,
   TParamsRequest,
   TQueryRequest,
@@ -45,14 +46,12 @@ export const professionalController = {
     }
   },
 
-  async findProfessionals(
-    req: TParamsRequest<{ companyId: number }>,
-    res: FastifyReply
-  ) {
+  async findProfessionals(req: FastifyRequest, res: FastifyReply) {
     const findProfessionals = new FindProfessionals(professionalRepository);
+    const { companyId } = decodeFromAuth(req.headers.authorization);
 
     try {
-      const response = await findProfessionals.execute(req.params.companyId);
+      const response = await findProfessionals.execute(companyId);
       res.type("application/json").code(200);
 
       return response;

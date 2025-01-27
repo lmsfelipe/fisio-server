@@ -21,7 +21,7 @@ export interface IProfessionalRepository {
   create(
     professional: IProfessionalPayload
   ): Promise<{ success: boolean; name: string }>;
-  findAll(companyId: number): Promise<IProfessional[] | null>;
+  findAll(companyId: string): Promise<IProfessional[] | null>;
   findOneWithAppointments(
     id: number
   ): Promise<IProfessionalWithAppointment | null>;
@@ -45,13 +45,14 @@ export class ProfessionalRepository implements IProfessionalRepository {
           transaction,
           include: [Address],
         });
-        const professionalResp: IProfessional = await ProfessionalModel.create(
+
+        await ProfessionalModel.create(
           { ...professional, userId: userResp.id },
           { transaction }
         );
 
         response.success = true;
-        response.name = professionalResp.name;
+        response.name = userResp.name;
       });
     } catch (error) {
       throw new Error("Não foi possível criar o profissional", {
@@ -60,13 +61,17 @@ export class ProfessionalRepository implements IProfessionalRepository {
     }
 
     return response;
-
-    return UserModel.create(payload, { include: [Address, ProfessionalModel] });
   }
 
-  findAll(companyId: number): Promise<IProfessional[]> {
+  findAll(companyId: string): Promise<IProfessional[]> {
     return ProfessionalModel.findAll({
-      where: { companyId, specialization: Specialization.PHISIO },
+      where: {
+        companyId,
+        [Op.or]: [
+          { specialization: Specialization.PHISIO },
+          { specialization: Specialization.SPEECH },
+        ],
+      },
     });
   }
 
@@ -83,7 +88,6 @@ export class ProfessionalRepository implements IProfessionalRepository {
   ): Promise<IProfessionalWithAppointment[]> {
     return ProfessionalModel.findAll({
       where: {
-        specialization: Specialization.PHISIO,
         companyId,
       },
       include: {

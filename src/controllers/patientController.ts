@@ -9,6 +9,7 @@ import {
   TBodyRequest,
   TParamsRequest,
   FastifyReply,
+  FastifyRequest,
 } from "../interfaces/fastify/requestTypes";
 import { decodeFromAuth } from "../utils/decodeFromAuth";
 
@@ -40,14 +41,13 @@ export const patientController = {
     }
   },
 
-  async findPatients(
-    req: TParamsRequest<{ companyId: number }>,
-    res: FastifyReply
-  ) {
+  async findPatients(req: FastifyRequest, res: FastifyReply) {
     const findPatients = new FindPatients(patientRepository);
 
+    const { companyId } = decodeFromAuth(req.headers.authorization);
+
     try {
-      const response = await findPatients.execute(req.params.companyId);
+      const response = await findPatients.execute(companyId);
       res.type("application/json").code(200);
 
       return response;

@@ -8,7 +8,7 @@ export class FindPatients {
     this.patientRepository = patientRepository;
   }
 
-  async execute(companyId: number): Promise<IPatient[] | null> {
+  async execute(companyId: string): Promise<IPatient[] | null> {
     return await this.patientRepository.findAll(companyId);
   }
 }

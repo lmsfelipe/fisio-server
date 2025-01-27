@@ -64,7 +64,7 @@ fastify.post(
   patientController.createPatient
 );
 fastify.get(
-  "/find-patients/:companyId",
+  "/find-patients",
   { preHandler: [auth] },
   patientController.findPatients
 );
@@ -81,7 +81,7 @@ fastify.post(
   professionalController.createProfessional
 );
 fastify.get(
-  "/find-professionals/:companyId",
+  "/find-professionals",
   { preHandler: [auth] },
   professionalController.findProfessionals
 );

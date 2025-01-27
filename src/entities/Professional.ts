@@ -7,7 +7,7 @@ export enum Specialization {
 export interface IProfessional {
   companyId?: string;
   userId?: string;
-  name: string;
+  name?: string;
   specialization: Specialization;
 }
 

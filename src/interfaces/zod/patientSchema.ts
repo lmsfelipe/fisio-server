@@ -4,7 +4,6 @@ import { IPatient } from "../../entities/Patient";
 
 const patientSchema = z.object({
   name: z.string(),
-  userId: z.string(),
   fatherName: z.optional(z.string()),
   motherName: z.string(),
   diagnosis: z.string(),

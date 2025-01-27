@@ -48,7 +48,7 @@ export class CreateProfessional {
     user.setAddressCompanyId();
 
     const professionalPayload = new Professional({
-      name: professional.name,
+      name: user.data.name,
       companyId: companyId as string,
       specialization: professional.specialization,
     });

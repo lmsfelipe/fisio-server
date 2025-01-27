@@ -3,7 +3,6 @@ import { userSchema } from "./userSchema";
 import { IProfessional, Specialization } from "../../entities/Professional";
 
 const professionalSchema = z.object({
-  name: z.string(),
   specialization: z.enum([
     Specialization.PHISIO,
     Specialization.SECRETARY,
