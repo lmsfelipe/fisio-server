@@ -25,7 +25,6 @@ import {
 } from "../zod/appointmentSchema";
 import { companyPayloadSchema } from "../zod/companySchema";
 import { companyController } from "../../controllers/companyConroller";
-import { closeAppointmentsJob } from "../cron";
 
 const fastify = Fastify({
   logger: true,
@@ -142,45 +141,9 @@ fastify.get(
 /**
  * Start
  */
-async function dbConnect() {
-  try {
-    await sequelize.authenticate();
-    console.log(
-      "====================Database synchronized===================="
-    );
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-}
-
 const port = process.env.PORT || "8080";
 const host = process.env.HOST || "0.0.0.0";
 
-function appConect() {
-  fastify.listen(
-    { port: parseInt(port, 10), host },
-    (err: any, address: string) => {
-      if (err) {
-        throw err;
-      }
-
-      closeAppointmentsJob.start();
-
-      console.log(
-        `==========Server is now listening on ${address}==============`
-      );
-    }
-  );
-}
-
-(async () => {
-  try {
-    await dbConnect();
-    appConect();
-  } catch (error) {
-    console.error(
-      ">>>>>>>>>>>>>>>>Error synchronizing database:<<<<<<<<<<<<<<<<<<",
-      error
-    );
-  }
-})();
+fastify.listen({ port: parseInt(port, 10), host }).then(() => {
+  console.log(`========== Server is now running ==============`);
+});
