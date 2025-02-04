@@ -6,6 +6,7 @@ module.exports = {
     return queryInterface.bulkInsert("addresses", [
       {
         id: "c321d2d9-dcbc-4303-9723-ae0c781c882a",
+        companyId: "e30c0aac-9321-448f-80c3-e246d64aaab3",
         addressableType: "user",
         street: "R. Euclides da Maria",
         number: "264",
@@ -19,6 +20,7 @@ module.exports = {
       },
       {
         id: "c92cfef3-7459-4d55-9144-81979a77b88a",
+        companyId: "e30c0aac-9321-448f-80c3-e246d64aaab3",
         addressableType: "company",
         street: "Av Dois e Um",
         number: "132",

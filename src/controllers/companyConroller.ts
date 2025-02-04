@@ -20,7 +20,7 @@ export const companyController = {
     try {
       const response = await createCompany.execute(req.body);
 
-      res.type("application/json").code(200);
+      res.type("application/json").code(201);
       return { success: response.success };
     } catch (error) {
       if (error instanceof Error) {

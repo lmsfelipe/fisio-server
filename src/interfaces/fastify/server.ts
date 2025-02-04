@@ -142,29 +142,45 @@ fastify.get(
 /**
  * Start
  */
-const port = process.env.PORT || "8080";
-const host = process.env.HOST || "0.0.0.0";
-
-sequelize
-  .sync({ alter: true })
-  .then(() => {
+async function dbConnect() {
+  try {
+    await sequelize.authenticate();
     console.log(
       "====================Database synchronized===================="
     );
-    fastify.listen(
-      { port: parseInt(port, 10), host },
-      (err: any, address: string) => {
-        if (err) throw err;
-        closeAppointmentsJob.start();
-        console.log(
-          `==========Server is now listening on ${address}==============`
-        );
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+}
+
+const port = process.env.PORT || "8080";
+const host = process.env.HOST || "0.0.0.0";
+
+function appConect() {
+  fastify.listen(
+    { port: parseInt(port, 10), host },
+    (err: any, address: string) => {
+      if (err) {
+        throw err;
       }
-    );
-  })
-  .catch((err: any) => {
+
+      closeAppointmentsJob.start();
+
+      console.log(
+        `==========Server is now listening on ${address}==============`
+      );
+    }
+  );
+}
+
+(async () => {
+  try {
+    await dbConnect();
+    appConect();
+  } catch (error) {
     console.error(
       ">>>>>>>>>>>>>>>>Error synchronizing database:<<<<<<<<<<<<<<<<<<",
-      err
+      error
     );
-  });
+  }
+})();

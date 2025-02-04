@@ -26,7 +26,7 @@ export const patientController = {
         companyId: decodedToken.companyId,
       });
 
-      res.type("application/json").code(200);
+      res.type("application/json").code(201);
       return { success: true, name: response.name };
     } catch (error) {
       if (error instanceof Error) {

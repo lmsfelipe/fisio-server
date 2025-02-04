@@ -26,7 +26,7 @@ export const appointmentController = {
       await createAppointment.execute({ ...req.body, companyId });
 
       reply
-        .code(200)
+        .code(201)
         .header("Content-Type", "application/json; charset=utf-8")
         .send({ success: true, data: req.body });
     } catch (error) {

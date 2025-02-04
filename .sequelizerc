@@ -9,7 +9,7 @@ module.exports = {
     "db",
     "sequelize",
     "config",
-    "config.json"
+    "config.js"
   ),
   "models-path": path.resolve("src", "interfaces", "db", "sequelize", "models"),
   "seeders-path": path.resolve(

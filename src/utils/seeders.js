@@ -2,15 +2,17 @@ const { v4: uuidv4 } = require("uuid");
 const { faker } = require("@faker-js/faker");
 
 const SEED_SIZE = 100;
+const COMPANY_ID = "e30c0aac-9321-448f-80c3-e246d64aaab3";
 
 // Users
 function userData(userType) {
   const users = [];
 
-  // Generate 100 users with the same ownerId
+  // Generate 100 users with the same companyId
   for (let i = 0; i < SEED_SIZE; i++) {
     users.push({
       id: uuidv4(),
+      companyId: COMPANY_ID,
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -36,18 +38,18 @@ const usersProfessionalSeed = userData("professional");
 function patientsData() {
   const patients = [];
 
-  // Generate x patients with the same ownerId
+  // Generate x patients with the same companyId
   for (let i = 0; i < SEED_SIZE; i++) {
     patients.push({
       id: uuidv4(), // Generate a unique UUID for each patient
-      ownerId: "e30c0aac-9321-448f-80c3-e246d64aaab3", // The ownerId provided
+      companyId: COMPANY_ID, // The companyId provided
+      userId: usersPatientSeed[i].id,
       name: faker.person.fullName(), // Generate a random name
       motherName: faker.person.fullName(), // Generate a random mother’s name
       fatherName: faker.person.fullName(), // Generate a random father’s name
       diagnosis: faker.lorem.sentence(), // Generate a random diagnosis
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: usersPatientSeed[i].id,
     });
   }
 
@@ -63,12 +65,12 @@ function professionalsData() {
   for (let i = 0; i < SEED_SIZE; i++) {
     professionals.push({
       id: uuidv4(),
-      ownerId: "e30c0aac-9321-448f-80c3-e246d64aaab3",
+      companyId: COMPANY_ID,
+      userId: usersProfessionalSeed[i].id,
       name: faker.person.fullName(),
       specialization: "phisio",
       createdAt: new Date(),
       updatedAt: new Date(),
-      userId: usersProfessionalSeed[i].id,
     });
   }
 
