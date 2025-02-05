@@ -59,7 +59,7 @@ export class CompanyRepository implements ICompanyRepository {
 
       success = true;
     } catch (error) {
-      throw new Error("Não foi possível criar o agendamento", { cause: error });
+      throw new Error("Não foi possível criar a empresa", { cause: error });
     }
 
     return { success };
