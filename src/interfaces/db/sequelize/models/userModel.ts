@@ -50,7 +50,8 @@ const User = sequelize.define(
       allowNull: false,
     },
     photo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     userType: {
       type: DataTypes.ENUM(

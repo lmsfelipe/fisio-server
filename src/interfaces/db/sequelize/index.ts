@@ -8,8 +8,6 @@ const {
   PG_HOST = "host.docker.internal",
 } = process.env;
 
-console.log("DB env logs => ", PG_DATABASE, PG_USERNAME, PG_HOST);
-
 const sequelize = new Sequelize(PG_DATABASE, PG_USERNAME, PG_PASSWORD, {
   host: PG_HOST,
   dialect: "postgres",

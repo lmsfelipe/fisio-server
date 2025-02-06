@@ -26,7 +26,8 @@ const Company = sequelize.define(
       // unique: true,
     },
     logo: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {}

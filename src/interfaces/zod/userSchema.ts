@@ -10,7 +10,7 @@ export const userSchema = z.object({
   cpf: z.string().length(11),
   gender: z.enum([Gender.FEMALE, Gender.MALE, Gender.OTHER]),
   phone: z.string().length(11),
-  photo: z.optional(z.instanceof(File)),
+  photo: z.optional(z.string()),
   address: addressSchema,
   userType: z.optional(
     z.enum([UserType.OWNER, UserType.PATIENT, UserType.PROFESSIONAL])

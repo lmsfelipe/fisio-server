@@ -32,6 +32,7 @@ export class CompanyRepository implements ICompanyRepository {
           {
             companyName: companyPayload.companyName,
             cnpj: companyPayload.cnpj,
+            logo: companyPayload.logo,
           },
           {
             transaction,

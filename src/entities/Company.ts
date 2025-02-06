@@ -8,7 +8,7 @@ export interface ICompany {
   companyName: string;
   cnpj: string;
   address: IAddress;
-  logo?: File;
+  logo?: string;
   professionals?: IProfessional[];
   patients?: IPatient[];
   users?: IUser[];

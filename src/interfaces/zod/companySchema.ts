@@ -7,6 +7,6 @@ export const companyPayloadSchema = z.object({
   companyName: z.string(),
   cnpj: z.string(),
   address: addressSchema,
-  logo: z.optional(z.instanceof(File)),
+  logo: z.optional(z.string()),
   user: userSchema,
 }) satisfies z.ZodType<ICompanyPayload>;

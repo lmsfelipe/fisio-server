@@ -30,7 +30,7 @@ export interface IUser {
   cpf: string;
   gender: Gender;
   phone: string;
-  photo?: File;
+  photo?: string;
   address: IAddress;
   userType?: UserType;
   permission?: Permission;

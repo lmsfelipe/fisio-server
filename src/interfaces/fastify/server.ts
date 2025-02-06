@@ -145,5 +145,6 @@ const port = process.env.PORT || "8080";
 const host = process.env.HOST || "0.0.0.0";
 
 fastify.listen({ port: parseInt(port, 10), host }).then(() => {
+  console.log(`>>>> Running on ${process.env.NODE_ENV} environment <<<<`);
   console.log(`========== Server is now running ==============`);
 });
