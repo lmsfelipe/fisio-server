@@ -13,6 +13,14 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
+      professionalId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+      },
+      patientId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+      },
       dateStart: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -45,6 +53,11 @@ module.exports = {
         defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn("NOW"),
