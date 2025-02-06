@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: false,
       },
+      addressableId: {
+        type: Sequelize.UUID,
+        allowNull: false,
+      },
       addressableType: {
         type: Sequelize.ENUM("user", "company"),
         allowNull: false,
@@ -40,6 +44,16 @@ module.exports = {
       zipCode: {
         type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },

@@ -25,6 +25,16 @@ module.exports = {
         type: Sequelize.ENUM("phisio", "secretary", "speech"),
         allowNull: false,
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
+      },
     });
   },
 

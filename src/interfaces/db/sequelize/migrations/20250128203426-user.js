@@ -44,7 +44,8 @@ module.exports = {
         allowNull: false,
       },
       photo: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       userType: {
         type: Sequelize.ENUM("owner", "patient", "professional"),
