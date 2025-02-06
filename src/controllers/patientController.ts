@@ -32,8 +32,7 @@ export const patientController = {
       if (error instanceof Error) {
         // TODO: standardize errors
         res.type("application/json").code(400);
-        console.log("error", error);
-        throw { error: error.message };
+        throw { message: error.message, error: error.cause };
       } else {
         res.type("application/json").code(500);
         throw { error: "Ocorreu um erro" };

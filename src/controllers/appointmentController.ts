@@ -30,7 +30,14 @@ export const appointmentController = {
         .header("Content-Type", "application/json; charset=utf-8")
         .send({ success: true, data: req.body });
     } catch (error) {
-      reply.type("application/json").code(400);
+      if (error instanceof Error) {
+        // TODO: standardize errors
+        reply.type("application/json").code(400);
+        throw { message: error.message, error: error.cause };
+      } else {
+        reply.type("application/json").code(500);
+        throw { error: "Ocorreu um erro" };
+      }
     }
   },
 

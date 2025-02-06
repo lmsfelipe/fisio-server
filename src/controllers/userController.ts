@@ -45,10 +45,10 @@ export const userController = {
       if (error instanceof Error) {
         // TODO: standardize errors
         res.type("application/json").code(401);
-        throw { error: error.message };
+        throw { message: error.message };
       } else {
         res.type("application/json").code(500);
-        throw { error: "Something went wrong" };
+        throw { error: "Ocorreu um erro" };
       }
     }
   },
